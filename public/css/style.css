@@ -1,0 +1,248 @@
+@font-face {
+  font-family: UnifrakturMaguntia;
+  src: url("../fonts/UnifrakturMaguntia-Regular.ttf");
+}
+
+.flash {
+  position: absolute !important;
+  right: 10px;
+  top: 20px;
+  z-index: 99999;
+}
+
+.flash .alert-danger {
+  color: #fff;
+}
+
+.flash ul {
+  list-style-type: none;
+}
+
+.flash ul li {
+  text-transform: uppercase;
+  padding: 10px 0;
+}
+
+.flash .alert-success {
+  background: #03e260;
+  color: #fff;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none !important;
+  outline-width: 0 !important;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+#app {
+  -webkit-transition: .4s ease;
+  transition: .4s ease;
+}
+
+.bg-default {
+  background-color: #0d0e1969;
+  color: #fff;
+}
+
+.logo-text {
+  font-family: 'UnifrakturMaguntia', 'Cursive';
+}
+
+.logo-text {
+  font-family: 'UnifrakturMaguntia-Regular', Cursive;
+}
+
+.flex-center {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.clear-left {
+  margin-left: 230px !important;
+}
+
+.where {
+  font-size: 2rem;
+  padding: 16px 10px;
+}
+
+.top-nav-main {
+  background-color: #04010e57;
+  color: #fff;
+}
+
+.top-nav-main a {
+  color: #fff;
+}
+
+.sidebar-main {
+  position: fixed;
+  left: 0;
+  width: 230px;
+  height: 100vh;
+  top: 0;
+  background-color: #04010e;
+  color: #fff;
+  padding: 14px 10px;
+  overflow-x: hidden;
+}
+
+.sidebar-main ul.nav .nav-item .nav-link {
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid #ddd;
+  border-right: none !important;
+  border-left: none !important;
+  border-bottom: none !important;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.sidebar-main ul.nav .nav-item .nav-link i {
+  padding-right: 10px;
+}
+
+.sidebar-main ul.nav .nav-item .nav-item.dropdown-item .nav-link {
+  border: none !important;
+  -webkit-transition: 0s;
+  transition: 0s;
+  opacity: .9;
+  font-size: 12px;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.sidebar-main ul.nav .nav-item .nav-item.dropdown-item .nav-link:hover {
+  background: none;
+}
+
+.sidebar-main ul.nav .nav-item .nav-item.dropdown-item:hover {
+  background: none;
+}
+
+.sidebar-main ul.nav .nav-item .nav-link.active {
+  background: #f55a00 !important;
+  color: #fff;
+  border: none;
+}
+
+.newStaffForm label {
+  color: #d1ddd1;
+  padding: 5px;
+  width: 100%;
+  background: #535353;
+}
+
+.newStaffForm .display-4 {
+  padding: 14px 10px;
+  font-size: 1.8rem;
+}
+
+.newStaffForm .form-group {
+  margin: 24px auto;
+}
+
+.newStaffForm .form-control,
+.newStaffForm .custom-select {
+  border-color: green;
+  background: transparent;
+  border: none;
+  border-radius: 0 !important;
+  border-bottom: 1px solid green;
+  color: #111;
+  margin: 16px auto;
+}
+
+.newStaffForm .form-control:focus,
+.newStaffForm .custom-select:focus {
+  outline: 0 !important;
+  border: none !important;
+}
+
+.newStaffForm ::-webkit-input-placeholder {
+  color: #303030;
+}
+
+.newStaffForm :-ms-input-placeholder {
+  color: #303030;
+}
+
+.newStaffForm ::-ms-input-placeholder {
+  color: #303030;
+}
+
+.newStaffForm ::placeholder {
+  color: #303030;
+}
+
+.staff-profiles .main-body {
+  padding: 15px;
+}
+
+.staff-profiles .card {
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+          box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.staff-profiles .card {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0 solid rgba(0, 0, 0, 0.125);
+  border-radius: .25rem;
+  color: #04010e !important;
+}
+
+.staff-profiles .card-body {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1rem;
+}
+
+.staff-profiles .gutters-sm {
+  margin-right: -8px;
+  margin-left: -8px;
+}
+
+.staff-profiles .gutters-sm > .col,
+.staff-profiles .gutters-sm > [class*=col-] {
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+.staff-profiles h4 {
+  color: #04010e;
+}
+
+.staff-profiles .profile-pic {
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .clear-left {
+    margin-left: 0 !important;
+  }
+}
+/*# sourceMappingURL=style.css.map */

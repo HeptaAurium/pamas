@@ -1,0 +1,242 @@
+@font-face {
+    font-family: UnifrakturMaguntia;
+    src: url("../fonts/UnifrakturMaguntia-Regular.ttf");
+}
+
+.flash {
+    position: absolute !important;
+    right: 10px;
+    top: 20px;
+    z-index: 99999;
+
+    .alert-danger {
+
+        color: #fff;
+    }
+
+    ul {
+        list-style-type: none;
+
+        li {
+            text-transform: uppercase;
+            padding: 10px 0;
+        }
+    }
+
+    .alert-success {
+        background: #03e260;
+        color: #fff;
+    }
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none !important;
+    outline-width: 0 !important;
+    box-shadow: none;
+}
+
+#app {
+    transition: .4s ease;
+}
+
+.bg-default {
+    background-color: #0d0e1969;
+    color: #fff;
+
+}
+
+
+.logo-text {
+    font-family: 'UnifrakturMaguntia', 'Cursive';
+}
+
+.logo-text {
+    font-family: 'UnifrakturMaguntia-Regular', Cursive;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+//
+.clear-left {
+    margin-left: 230px !important;
+}
+
+.where {
+    font-size: 2rem;
+    padding: 16px 10px;
+}
+
+// top
+.top-nav-main {
+    background-color: #04010e57;
+    color: #fff;
+
+    a {
+        color: #fff;
+    }
+}
+
+// Sidebar
+
+.sidebar-main {
+    position: fixed;
+    left: 0;
+    width: 230px;
+    height: 100vh;
+    top: 0;
+    background-color: #04010e;
+    color: #fff;
+    padding: 14px 10px;
+    overflow-x: hidden;
+
+    ul.nav {
+        .nav-item {
+            .nav-link {
+                text-decoration: none;
+                color: #fff;
+                border: 1px solid #ddd;
+                border-right: none !important;
+                border-left: none !important;
+                border-bottom: none !important;
+                padding-top: 14px;
+                padding-bottom: 14px;
+
+                i {
+                    padding-right: 10px;
+                }
+
+            }
+
+
+            .nav-item.dropdown-item {
+                .nav-link {
+                    border: none !important;
+                    transition: 0s;
+                    opacity: .9;
+                    font-size: 12px;
+                    padding-top: 8px !important;
+                    padding-bottom: 8px !important;
+
+
+                    &:hover {
+                        background: none;
+                    }
+                }
+
+                &:hover {
+                    background: none;
+                }
+            }
+
+
+            .nav-link.active {
+                background: rgb(245, 90, 0) !important;
+                color: #fff;
+                border: none;
+            }
+        }
+
+
+    }
+}
+
+.newStaffForm {
+    label {
+        color: #d1ddd1;
+        padding: 5px;
+        width: 100%;
+        background: #535353;
+    }
+
+    .display-4 {
+        padding: 14px 10px;
+        font-size: 1.8rem;
+    }
+
+    .form-group {
+        margin: 24px auto;
+    }
+
+    .form-control,
+    .custom-select {
+        border-color: green;
+        background: transparent;
+        border: none;
+        border-radius: 0 !important;
+        border-bottom: 1px solid green;
+        color: #111;
+        margin: 16px auto;
+
+        &:focus {
+            outline: 0 !important;
+            border: none !important;
+        }
+    }
+
+    ::placeholder {
+        color: rgb(48, 48, 48);
+    }
+}
+
+.staff-profiles {
+    .main-body {
+        padding: 15px;
+    }
+    
+
+    .card {
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+    }
+
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0 solid rgba(0, 0, 0, .125);
+        border-radius: .25rem;
+        color: #04010e !important;
+    }
+
+    .card-body {
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 1rem;
+    }
+
+    .gutters-sm {
+        margin-right: -8px;
+        margin-left: -8px;
+    }
+
+    .gutters-sm>.col,
+    .gutters-sm>[class*=col-] {
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+
+
+    h4 {
+        color: #04010e;
+    }
+
+    .profile-pic{
+        cursor: pointer;
+    }
+}
+
+@media (max-width:768px) {
+    .clear-left {
+        margin-left: 0 !important;
+    }
+}
