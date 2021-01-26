@@ -100,6 +100,9 @@ button:focus {
   color: #fff;
   padding: 14px 10px;
   overflow-x: hidden;
+  -webkit-transition: .5s;
+  transition: .5s;
+  z-index: 99;
 }
 
 .sidebar-main ul.nav .nav-item .nav-link {
@@ -246,6 +249,17 @@ button:focus {
 
 @media (max-width: 768px) {
   .clear-left {
+    margin-left: 0 !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .sidebar-main {
+    width: 0 !important;
+    margin-left: -30px !important;
+  }
+  .sidebar-main.toggle {
+    width: 100% !important;
     margin-left: 0 !important;
   }
 }

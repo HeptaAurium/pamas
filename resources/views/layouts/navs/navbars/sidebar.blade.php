@@ -1,4 +1,4 @@
-<div class="sidebar-main shadow-sm d-none d-md-block">
+<div class="sidebar-main shadow-sm">
     <div class="side-top">
         <div class="d-flex flex-column justify-content-center text-center">
             <span class="logo-text">{{ config('app.name') }}</span> <br>

@@ -13,7 +13,7 @@
 
     ul {
         list-style-type: none;
-        padding-left: 0!important;
+        padding-left: 0 !important;
 
         li {
             text-transform: uppercase;
@@ -22,6 +22,7 @@
     }
 
 }
+
 .alert-danger {
     background: #CA0B00 !important;
     border-color: #CA0B00 !important;
@@ -33,6 +34,7 @@
     border-color: #4BB543 !important;
     color: #fff;
 }
+
 input:focus,
 select:focus,
 textarea:focus,
@@ -99,6 +101,8 @@ button:focus {
     color: #fff;
     padding: 14px 10px;
     overflow-x: hidden;
+    transition: .5s;
+    z-index: 99;
 
     ul.nav {
         .nav-item {
@@ -150,6 +154,8 @@ button:focus {
 
     }
 }
+
+
 
 .newStaffForm {
     label {
@@ -241,6 +247,18 @@ button:focus {
 
 @media (max-width:768px) {
     .clear-left {
+        margin-left: 0 !important;
+    }
+}
+
+@media(max-width:576px) {
+    .sidebar-main {
+        width: 0 !important;
+        margin-left: -30px !important;
+    }
+
+    .sidebar-main.toggle {
+        width: 100% !important;
         margin-left: 0 !important;
     }
 }
