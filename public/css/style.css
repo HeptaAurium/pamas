@@ -5,26 +5,30 @@
 
 .flash {
   position: absolute !important;
-  right: 10px;
+  right: 0;
   top: 20px;
   z-index: 99999;
 }
 
-.flash .alert-danger {
-  color: #fff;
-}
-
 .flash ul {
   list-style-type: none;
+  padding-left: 0 !important;
 }
 
 .flash ul li {
   text-transform: uppercase;
-  padding: 10px 0;
+  padding: 5px 0;
 }
 
-.flash .alert-success {
-  background: #03e260;
+.alert-danger {
+  background: #CA0B00 !important;
+  border-color: #CA0B00 !important;
+  color: #fff;
+}
+
+.alert-success {
+  background: #4BB543 !important;
+  border-color: #4BB543 !important;
   color: #fff;
 }
 
@@ -57,9 +61,9 @@ button:focus {
 }
 
 .flex-center {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;

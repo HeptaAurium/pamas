@@ -119,78 +119,45 @@
                                             </div>
                                         </div>
 
-
-
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 mb-3">
                                 <div class="card h-100">
                                     <div class="card-body">
-                                        <h6 class="bg-secondary text-white p-2 mb-3">Alllowances</h6>
-                                        <div class="row">
-                                            <div class="col-3">
-                                                <small>House</small>
-                                                <div>
-                                                    {{ number_format(303030) }}
-                                                </div>
-                                            </div>
-                                            <div class="col-3">
-                                                <small>House</small>
-                                                <div>
-                                                    {{ number_format(303030) }}
-                                                </div>
-                                            </div>
-                                            <div class="col-3">
-                                                <small>House</small>
-                                                <div>
-                                                    {{ number_format(303030) }}
-                                                </div>
-                                            </div>
-                                            <div class="col-3">
-                                                <small>House</small>
-                                                <div>
-                                                    {{ number_format(303030) }}
-                                                </div>
-                                            </div>
-                                            <div class="col-3">
-                                                <small>House</small>
-                                                <div>
-                                                    {{ number_format(303030) }}
-                                                </div>
+                                       
+                                        <div class="pb-2">
+                                            <h6 class="bg-secondary text-white p-2 mb-4 align-items-center">Allowances 
+                                                @if ($settings->allowance_grouping == 0)
+                                                <button class="btn text-white float-right p-0"> <i class="fa fa-pencil-alt" aria-hidden="true"></i> </button>
+                                              @endif                                                  
+                                            </h6>
+                                            <div class="row">
+                                                @foreach ($allowance as $item)
+                                                    <div class="col-4">
+                                                        <small>{{ $item['name'] }}</small>
+                                                        <div>
+                                                            KSH {{ number_format($item['amount']) }}
+                                                        </div>
+                                                    </div>
+                                                @endforeach
                                             </div>
                                         </div>
-                                        <h6 class="bg-secondary text-white p-2 mb-3">Deductions</h6>
-                                        <div class="row">
-                                            <div class="col-3">
-                                                <small>NHIF</small>
-                                                <div>
-                                                    {{ number_format(303030) }}
-                                                </div>
-                                            </div>
-                                            <div class="col-3">
-                                                <small>NSSF</small>
-                                                <div>
-                                                    {{ number_format(303030) }}
-                                                </div>
-                                            </div>
-                                            <div class="col-3">
-                                                <small>House</small>
-                                                <div>
-                                                    {{ number_format(303030) }}
-                                                </div>
-                                            </div>
-                                            <div class="col-3">
-                                                <small>House</small>
-                                                <div>
-                                                    {{ number_format(303030) }}
-                                                </div>
-                                            </div>
-                                            <div class="col-3">
-                                                <small>House</small>
-                                                <div>
-                                                    {{ number_format(303030) }}
-                                                </div>
+                                        <div class="pb-2">
+                                            <h6 class="bg-secondary text-white p-2 mb-2">Deductions
+                                                @if ($settings->deduction_grouping == 0)
+                                                <button class="btn text-white float-right p-0"> <i class="fa fa-pencil-alt" aria-hidden="true"></i> </button>
+                                              @endif 
+                                            </h6>
+                                            <div class="row">
+                                                @foreach ($deduction as $ded)
+                                                    <div class="col-4">
+                                                        <small>{{ $ded['name'] }}</small>
+                                                        <div>
+                                                            KSH {{ number_format($ded['amount']) }}
+                                                        </div>
+                                                    </div>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>

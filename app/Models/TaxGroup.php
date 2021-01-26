@@ -5,11 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Allowance extends Model
+class TaxGroup extends Model
 {
     use HasFactory;
-
-    protected $table = "allowances";
+    protected $table = "tax_groups";
 
     protected $fillable = ['name'];
 }

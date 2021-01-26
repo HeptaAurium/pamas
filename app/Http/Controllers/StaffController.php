@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Allowance;
 use App\Models\Bank;
+use App\Models\Deduction;
 use App\Models\SystemSetting;
 use App\Models\Staff;
 use Doctrine\DBAL\Query\QueryException;
@@ -11,7 +13,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 // use Yajra\Datatables\Facades\Datatables;
 use Datatables;
-
+use Illuminate\Support\Facades\Log;
+use Sentry\Serializer\Serializer;
+use Sentry\ClientBuilderInterface;
+use Sentry;
 
 class StaffController extends Controller
 {
@@ -21,6 +26,7 @@ class StaffController extends Controller
     {
         global $data;
         $hasPrimaryBank = true;
+
         $this->data = &$data;
         $this->data['settings'] = SystemSetting::find(1);
         $this->data['tax_groups'] = DB::table('tax_groups')->get();
@@ -28,6 +34,8 @@ class StaffController extends Controller
         $this->data['branches'] = DB::table('branches')->get();
         $this->data['position'] = DB::table('staff_positions')->get();
         $this->data['banks'] = Bank::get();
+        $this->data['allowances'] = Allowance::get();
+        $this->data['deductions'] = Deduction::get();
         $this->data['primary_bank'] = Bank::where('is_primary', 1)->first();
         if ($this->data['settings']->has_primary_bank != 1) {
             $hasPrimaryBank = false;
@@ -86,19 +94,53 @@ class StaffController extends Controller
     public function store(Request $request)
     {
         //
+        $errors = [];
         $request->validate([
             'staff_unique_id' => 'bail|required|unique:staff,staff_unique_id',
             'national_id' => 'bail|required|unique:staff,national_id',
-            'tscno' => 'bail|required|unique:staff,tscno',
+            'tscno' => 'bail|sometimes|unique:staff,tscno',
         ]);
 
         $input = $request->except('_token');
-        $staff = new Staff;
+
         try {
-            $staff->create($input);
+            $staff = Staff::create($input);
+            $staff_id = $staff->id;
+            // get allowances and deductions if specific allowed
+            $setting = $this->data['settings'];
+
+
+            if ($setting->allowance_grouping == 0) {
+                $allowances = Allowance::get();
+                foreach ($allowances as $allowance) {
+                    $allow_id = $allowance->id;
+                    DB::table('staff_allowances')->insert([
+                        'staff_id' => $staff_id,
+                        'allowance' => $allow_id,
+                        'amount' => $request->$allow_id,
+                        'created_at' => Date('Y-m-d H:i:s'),
+                        'updated_at' => Date('Y-m-d H:i:s')
+                    ]);
+                }
+            }
+
+            if ($setting->deductions_grouping == 0) {
+                $deductions = Deduction::get();
+                foreach ($deductions as $deduction) {
+                    $ded_id = $deduction->id;
+                    DB::table('staff_deductions')->insert([
+                        'staff_id' => $staff_id,
+                        'deduction' => $ded_id,
+                        'amount' => $request->$ded_id,
+                        'created_at' => Date('Y-m-d H:i:s'),
+                        'updated_at' => Date('Y-m-d H:i:s'),
+                    ]);
+                }
+            }
+
             flash('Staff member successfully added!')->success();
-        } catch (QueryException $e) {
-            flash('We encountered an error while processing your request! Try again later!')->error();
+        } catch (\Throwable $th) {
+            flash('An error was encountered while processing your request! Try again later!')->success();
         }
 
         return back();
@@ -114,6 +156,9 @@ class StaffController extends Controller
     {
         //
         $this->data['staff'] = [];
+        $this->data['deduction'] = [];
+        $this->data['allowance'] = [];
+
         // $this->data['staff'] = Staff::where('id', $staff->id)->first();
         $this->data['staff'] =  $staff;
         $this->data['staff']['department'] = DB::table('departments')->where('id', $staff->department_id)->pluck('name')->first();
@@ -121,7 +166,32 @@ class StaffController extends Controller
         $this->data['staff']['position'] = DB::table('staff_positions')->where('id', $staff->position)->pluck('name')->first();
         $this->data['staff']['bank'] = DB::table('banks')->where('id', $staff->bank)->pluck('name')->first();
         $this->data['staff']['sec_bank'] = DB::table('banks')->where('id', $staff->secondary_bank)->pluck('name')->first();
-        // dd($this->data['staff']->firstname);
+
+        $setting = $this->data['settings'];
+
+        if ($setting->allowance_grouping == 0) {
+            $staff_allowances = DB::table('staff_allowances')->where('staff_id', $staff->id)->get();
+            foreach ($staff_allowances as $item) {
+                $array = [
+                    'name' => Allowance::where('id', $item->allowance)->pluck('name')->first(),
+                    'amount' => $item->amount
+                ];
+
+                array_push($this->data['allowance'], $array);
+            }
+        }
+        if ($setting->deduction_grouping == 0) {
+            $staff_deductions = DB::table('staff_deductions')->where('staff_id', $staff->id)->get();
+            foreach ($staff_deductions as $item) {
+                $array = [
+                    'name' => Deduction::where('id', $item->deduction)->pluck('name')->first(),
+                    'amount' => $item->amount
+                ];
+
+                array_push($this->data['deduction'], $array);
+            }
+        }
+
         return view('staff.show', $this->data);
     }
 

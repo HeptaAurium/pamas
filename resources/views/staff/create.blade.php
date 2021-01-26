@@ -8,7 +8,7 @@
             @csrf
             <div class="container">
                 <div class="row">
-                    <div class="col-md-6 bg-light border-right   py-4 ">
+                    <div class="col-md-6 bg-light border-right my-2  py-4 ">
                         <h2 class="col-12 text-dark text-muted py-2 pl-0">Personal Info</h2>
                         <div class="row">
                             <div class="form-group col-12">
@@ -75,24 +75,29 @@
                             <div class="form-group col-12">
                                 <label for="my-input">Residence</label>
                                 <div class="row">
-                                    <div class="col-4">
+                                    <div class="col-6 col-md-4">
                                         <input id="location" class="form-control" type="text" name="location"
-                                            placeholder="Location">
+                                            placeholder="Location" required>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-6 col-md-4">
                                         <input id="estate" class="form-control" type="text" name="estate"
-                                            placeholder="Estate/ Plot No">
+                                            placeholder="Estate/ Plot No" required>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-6 col-md-4">
                                         <input id="houseno" class="form-control" type="text" name="houseno"
-                                            placeholder="House No.">
+                                            placeholder="House No." required>
                                     </div>
 
                                 </div>
                             </div>
+                            <div class="form-group col-12">
+                                <label for="">File No.</label>
+                                <input type="text" name="fileno" id="" class="form-control" placeholder="File Number"
+                                    aria-describedby="helpId">
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6 bg-light py-4">
+                    <div class="col-md-6 bg-light my-2 py-4">
                         <h2 class="col-12 text-dark text-muted py-2 pl-0 mx-auto">Employment Info</h2>
                         <div class="row">
                             <div class="form-group col-6">
@@ -109,7 +114,7 @@
                         <div class="form-group">
                             <div class="row">
                                 @if ($settings->multi_branch == 1)
-                                    <div class="col-4">
+                                    <div class="col-6">
                                         <div class="form-group">
                                             <label for="">Branch</label>
                                             <select class="custom-select" name="branch_id" id="" required>
@@ -124,7 +129,7 @@
                                         </div>
                                     </div>
                                 @endif
-                                <div class="col-4">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="">Department</label>
                                         <select class="custom-select" name="department_id" id="" required>
@@ -138,11 +143,11 @@
                                                 aria-hidden="true"></i> Add Department </button>
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="">Position</label>
                                         <select class="custom-select" name="position" id="" required>
-                                            <option selected>Select department</option>
+                                            <option selected>Select position</option>
                                             @foreach ($position as $item)
                                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                                             @endforeach
@@ -173,16 +178,12 @@
                                     @endforeach
 
                                 </select>
-                            </div>
-                            <div class="form-group col-12">
-                                <label for="">File No.</label>
-                                <input type="text" name="fileno" id="" class="form-control" placeholder="File Number"
-                                    aria-describedby="helpId">
+                                <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addTaxGroupModal">
+                                    <i class="fa fa-plus-square" aria-hidden="true"></i> Add TaxGroup </button>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12 bg-light py-4  my-2">
-
                         <div class="form-group my-2">
                             <label for="">Primary Bank</label>
                             <div class="row">
@@ -225,8 +226,59 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
+                    @if ($settings->allowance_grouping == 0)
+                        <div class="bg-light col-md-6 position-relative border-right my-3 py-4" style="height: auto;">
+                            <label for="">Allowances</label>
+                            <div class="row">
+                                @if (count($allowances) == 0)
+                                <div class="flex-center text-dark text-muted" style="height: 150px;">
+                                    <h2 class="text-center p-2">Available allowances will appear here once added!</h2>
+                                </div>
+                            @endif
+                               
+                                @foreach ($allowances as $item)
+                                    <div class="col-6 mb-2">
+                                        <input id="" class="form-control allowance" type="text" name="{{ $item->id }}"
+                                            placeholder="{{ $item->name }} Allowance">
+                                    </div>
+                                  
+                                @endforeach
+                                <input class="form-control" type="hidden" id="allowanceArray" name="allowances[]" value="">
+                            </div>
+
+                            <button class="btn btn-sm btn-primary position-absolute my-3" style="bottom:0"
+                                data-toggle="modal" data-target="#addAllowanceModal">
+                                <i class="fa fa-plus-square" aria-hidden="true"></i> Add Allowance
+                            </button>
+                        </div>
+                    @endif
+                    @if ($settings->deductions_grouping == 0)
+                        <div class="bg-light col-md-6 position-relative my-3 py-4" style="height: auto;">
+                            <label for="">Deductions</label>
+                            @if (count($deductions) == 0)
+                                <div class="flex-center" style="height: 150px;">
+                                    <h2 class="display text-dark text-muted text-center p-2">Available deductions will appear here once added!</h2>
+                                </div>
+                            @endif
+                            <div class="row">
+
+                                @foreach ($deductions as $item)
+                                    <div class="col-6 mb-2">
+                                        <input id="" class="form-control deduction" type="text" name="{{ $item->id }}"
+                                            placeholder="{{ $item->name }}">
+
+                                            </div>
+                                          
+                                          @endforeach
+                                        <input type="hidden" name="deductions" id="deductionArray">
+                                    </div>
+                                    <button class="btn btn-sm btn-primary position-absolute my-3" style="bottom:0"
+                                        data-toggle="modal" data-target="#addDeductionModal">
+                                        <i class="fa fa-plus-square" aria-hidden="true"></i> Add Deduction
+                                    </button>
+                            </div>
+                    @endif
                     <div class="col-12 my-2 py-5 bg-light">
                         <button class="btn btn-lg btn-success btn-block mt-3" type="submit">Save</button>
                         <button class="btn btn-secondary my-3" onclick="clearForm(newStaffForm)">Clear Form</button>
@@ -235,5 +287,14 @@
             </div>
         </form>
     </div>
+    {{-- Modals --}}
+    @include('modals.add-branch')
+    @include('modals.add-department')
+    @include('modals.add-position')
+    @include('modals.add-allowance')
+    @include('modals.add-deduction')
+    @include('modals.add-taxgroup')
+
+    {{-- --}}
     @include('layouts.navs.footer')
 @endsection

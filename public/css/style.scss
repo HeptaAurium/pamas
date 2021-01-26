@@ -5,30 +5,34 @@
 
 .flash {
     position: absolute !important;
-    right: 10px;
+    right: 0;
     top: 20px;
     z-index: 99999;
 
-    .alert-danger {
 
-        color: #fff;
-    }
 
     ul {
         list-style-type: none;
+        padding-left: 0!important;
 
         li {
             text-transform: uppercase;
-            padding: 10px 0;
+            padding: 5px 0;
         }
     }
 
-    .alert-success {
-        background: #03e260;
-        color: #fff;
-    }
+}
+.alert-danger {
+    background: #CA0B00 !important;
+    border-color: #CA0B00 !important;
+    color: #fff;
 }
 
+.alert-success {
+    background: #4BB543 !important;
+    border-color: #4BB543 !important;
+    color: #fff;
+}
 input:focus,
 select:focus,
 textarea:focus,
@@ -58,7 +62,7 @@ button:focus {
 }
 
 .flex-center {
-    display: flex;
+    display: flex !important;
     justify-content: center;
     align-items: center;
 }
@@ -189,7 +193,7 @@ button:focus {
     .main-body {
         padding: 15px;
     }
-    
+
 
     .card {
         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
@@ -230,7 +234,7 @@ button:focus {
         color: #04010e;
     }
 
-    .profile-pic{
+    .profile-pic {
         cursor: pointer;
     }
 }

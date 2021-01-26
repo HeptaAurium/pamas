@@ -68,7 +68,7 @@
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#allowances" aria-expanded="true">
                 <i class="fa fa-building" aria-hidden="true"></i>
-                {{ __('Alowances') }}
+                {{ __('Allowances') }}
                 <i class="fa fa-caret-down float-right" aria-hidden="true" style="padding: 5px;"></i>
 
             </a>

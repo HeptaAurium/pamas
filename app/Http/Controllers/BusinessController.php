@@ -3,24 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Allowance;
+use App\Models\Bank;
+use App\Models\Business;
+use App\Models\Deduction;
 use App\Models\SystemSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class AllowancesController extends Controller
+class BusinessController extends Controller
 {
+    protected $data;
 
     public function __construct()
     {
         global $data;
-        $this->data = &$data;
+        $hasPrimaryBank = true;
 
+        $this->data = &$data;
         $this->data['settings'] = SystemSetting::find(1);
         $this->data['tax_groups'] = DB::table('tax_groups')->get();
         $this->data['departments'] = DB::table('departments')->get();
         $this->data['branches'] = DB::table('branches')->get();
         $this->data['position'] = DB::table('staff_positions')->get();
+        $this->data['banks'] = Bank::get();
+        $this->data['allowances'] = Allowance::get();
+        $this->data['deductions'] = Deduction::get();
+        $this->data['primary_bank'] = Bank::where('is_primary', 1)->first();
+        if ($this->data['settings']->has_primary_bank != 1) {
+            $hasPrimaryBank = false;
+        }
+        $this->data['globals']['hasPrimaryBank'] = $hasPrimaryBank;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -29,6 +43,7 @@ class AllowancesController extends Controller
     public function index()
     {
         //
+        return view('settings.business', $this->data);
     }
 
     /**
@@ -39,8 +54,6 @@ class AllowancesController extends Controller
     public function create()
     {
         //
-
-        return view('allowances.create', $this->data);
     }
 
     /**
@@ -52,31 +65,15 @@ class AllowancesController extends Controller
     public function store(Request $request)
     {
         //
-        $request->validate([
-            'name' => 'bail|required|unique:allowances,name',
-        ]);
-        $input = $request->except('_token');
-
-
-        try {
-            $create = new Allowance;
-            $create->create($input);
-
-            flash('Allowance added successfully!')->success();
-        } catch (\Throwable $th) {
-            flash('We encountered an error while processing your request! Try again later!')->error();
-        }
-
-        return back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Allowance  $allowance
+     * @param  \App\Models\Business  $business
      * @return \Illuminate\Http\Response
      */
-    public function show(Allowance $allowance)
+    public function show(Business $business)
     {
         //
     }
@@ -84,10 +81,10 @@ class AllowancesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Allowance  $allowance
+     * @param  \App\Models\Business  $business
      * @return \Illuminate\Http\Response
      */
-    public function edit(Allowance $allowance)
+    public function edit(Business $business)
     {
         //
     }
@@ -96,10 +93,10 @@ class AllowancesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Allowance  $allowance
+     * @param  \App\Models\Business  $business
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Allowance $allowance)
+    public function update(Request $request, Business $business)
     {
         //
     }
@@ -107,10 +104,10 @@ class AllowancesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Allowance  $allowance
+     * @param  \App\Models\Business  $business
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Allowance $allowance)
+    public function destroy(Business $business)
     {
         //
     }

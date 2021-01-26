@@ -38,7 +38,7 @@
                 <div class="card card-stats shadow-lg bg-dark">
                     <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
-                            <i class="fa fa-twitter"></i>
+                         <i class="fas fa-money-bill-wave-alt"></i> <i class="fa fa-forward" aria-hidden="true"></i>
                         </div>
                         <p class="card-category">Est. Next Payout</p>
                         <h3 class="card-title">KSH 85,000</h3>

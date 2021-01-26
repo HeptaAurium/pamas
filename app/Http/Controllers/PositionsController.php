@@ -2,25 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Allowance;
-use App\Models\SystemSetting;
+use App\Models\Position;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class AllowancesController extends Controller
+class PositionsController extends Controller
 {
-
-    public function __construct()
-    {
-        global $data;
-        $this->data = &$data;
-
-        $this->data['settings'] = SystemSetting::find(1);
-        $this->data['tax_groups'] = DB::table('tax_groups')->get();
-        $this->data['departments'] = DB::table('departments')->get();
-        $this->data['branches'] = DB::table('branches')->get();
-        $this->data['position'] = DB::table('staff_positions')->get();
-    }
     /**
      * Display a listing of the resource.
      *
@@ -39,8 +25,6 @@ class AllowancesController extends Controller
     public function create()
     {
         //
-
-        return view('allowances.create', $this->data);
     }
 
     /**
@@ -53,16 +37,16 @@ class AllowancesController extends Controller
     {
         //
         $request->validate([
-            'name' => 'bail|required|unique:allowances,name',
+            'name' => 'bail|required|unique:staff_positions,name',
         ]);
         $input = $request->except('_token');
 
 
         try {
-            $create = new Allowance;
+            $create = new Position;
             $create->create($input);
 
-            flash('Allowance added successfully!')->success();
+            flash('Position added successfully!')->success();
         } catch (\Throwable $th) {
             flash('We encountered an error while processing your request! Try again later!')->error();
         }
@@ -73,10 +57,10 @@ class AllowancesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Allowance  $allowance
+     * @param  \App\Models\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function show(Allowance $allowance)
+    public function show(Position $position)
     {
         //
     }
@@ -84,10 +68,10 @@ class AllowancesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Allowance  $allowance
+     * @param  \App\Models\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function edit(Allowance $allowance)
+    public function edit(Position $position)
     {
         //
     }
@@ -96,10 +80,10 @@ class AllowancesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Allowance  $allowance
+     * @param  \App\Models\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Allowance $allowance)
+    public function update(Request $request, Position $position)
     {
         //
     }
@@ -107,10 +91,10 @@ class AllowancesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Allowance  $allowance
+     * @param  \App\Models\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Allowance $allowance)
+    public function destroy(Position $position)
     {
         //
     }
