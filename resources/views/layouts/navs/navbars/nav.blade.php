@@ -16,7 +16,13 @@
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
-
+                @hasrole('Super-Admin|Admin|Accountant')
+                <li class="nav-item dropdown">
+                    <a id="btnPayroll" class="nav-link btn btn-success btn-sm mr-3 text-white" href="/payroll" role="">
+                        {{ __('Payroll') }}
+                    </a>
+                </li>
+                @endhasrole
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

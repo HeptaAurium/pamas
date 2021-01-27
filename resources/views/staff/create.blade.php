@@ -37,7 +37,7 @@
                                             placeholder="Phone Number *" required>
                                     </div>
                                     <div class="col-6">
-                                        <input id="secondarypno" class="form-control" type="text" name="secondarypno"
+                                        <input id="secondarypno" class="form-control" type="tel" name="secondarypno"
                                             placeholder="Secondary Phone Number">
                                     </div>
                                 </div>
@@ -107,7 +107,7 @@
                             </div>
                             <div class="form-group col-6">
                                 <label for="national_id">National ID</label>
-                                <input id="national_id" class="form-control" type="text" name="national_id"
+                                <input id="national_id" class="form-control" type="number" name="national_id"
                                     placeholder="National ID No" required>
                             </div>
                         </div>
@@ -167,7 +167,7 @@
                             </div>
                             <div class="form-group col-6">
                                 <label for="">Basic Salary *</label>
-                                <input id="" class="form-control" type="text" name="basal" placeholder="Basic Salary"
+                                <input id="" class="form-control" type="number" name="basal" placeholder="Basic Salary"
                                     required>
                             </div>
                             <div class="form-group col-12">
@@ -203,7 +203,7 @@
                                     @endif
                                 </div>
                                 <div class="col-6">
-                                    <input id="account_no" class="form-control" type="text" name="account_no"
+                                    <input id="account_no" class="form-control" type="number" name="account_no"
                                         placeholder="Primary account number" required>
 
                                 </div>
@@ -220,7 +220,7 @@
                                     </select>
                                 </div>
                                 <div class="col-6">
-                                    <input id="" class="form-control" type="text" name="secondary_acc"
+                                    <input id="" class="form-control" type="number" name="secondary_acc"
                                         placeholder="Secondary account number" required>
 
                                 </div>
@@ -239,7 +239,7 @@
                                
                                 @foreach ($allowances as $item)
                                     <div class="col-6 mb-2">
-                                        <input id="" class="form-control allowance" type="text" name="{{ $item->id }}"
+                                        <input id="" class="form-control allowance" type="number" name="{{ $item->id }}"
                                             placeholder="{{ $item->name }} Allowance">
                                     </div>
                                   
@@ -265,7 +265,7 @@
 
                                 @foreach ($deductions as $item)
                                     <div class="col-6 mb-2">
-                                        <input id="" class="form-control deduction" type="text" name="{{ $item->id }}"
+                                        <input id="" class="form-control deduction" type="number" name="{{ $item->id }}"
                                             placeholder="{{ $item->name }}">
 
                                             </div>

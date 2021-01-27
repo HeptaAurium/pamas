@@ -46,6 +46,7 @@ button:focus {
 
 #app {
     transition: .4s ease;
+    overflow-x: hidden !important;
 }
 
 .bg-default {
@@ -67,6 +68,14 @@ button:focus {
     display: flex !important;
     justify-content: center;
     align-items: center;
+}
+
+.padding{
+    padding-bottom: 3rem !important;
+}
+.panel{
+    padding: 1rem;
+    
 }
 
 //
@@ -170,29 +179,31 @@ button:focus {
         font-size: 1.8rem;
     }
 
-    .form-group {
-        margin: 24px auto;
-    }
 
-    .form-control,
-    .custom-select {
-        border-color: green;
-        background: transparent;
-        border: none;
-        border-radius: 0 !important;
-        border-bottom: 1px solid green;
-        color: #111;
-        margin: 16px auto;
+}
 
-        &:focus {
-            outline: 0 !important;
-            border: none !important;
-        }
-    }
+.form-group {
+    margin: 24px auto;
+}
 
-    ::placeholder {
-        color: rgb(48, 48, 48);
+.form-control,
+.custom-select {
+    border-color: green;
+    background: transparent;
+    border: none;
+    border-radius: 0 !important;
+    border-bottom: 1px solid green;
+    color: #111;
+    margin: 16px auto;
+
+    &:focus {
+        outline: 0 !important;
+        border: none !important;
     }
+}
+
+::placeholder {
+    color: rgb(48, 48, 48);
 }
 
 .staff-profiles {

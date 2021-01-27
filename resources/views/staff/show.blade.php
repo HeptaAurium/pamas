@@ -1,6 +1,6 @@
 @extends('layouts.app')
-
-@section('title', "{{ $staff->firstname . ' ' . $staff->lastname }}")
+@php $staff_name = $staff->firstname . ' ' . $staff->lastname @endphp
+@section('title',  $staff_name )
 
 @section('content')
     <div class="staff-profiles px-3 py-3">

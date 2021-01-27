@@ -9,6 +9,7 @@ use App\Http\Controllers\DeductionsController;
 use App\Http\Controllers\DepartmentsController;
 use App\Http\Controllers\PositionsController;
 use App\Http\Controllers\TaxGroupsController;
+use App\Http\Controllers\UserManagementController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/allowance', AllowancesController::class);
     Route::resource('/deduction', DeductionsController::class);
     Route::resource('/taxgroup', TaxGroupsController::class);
+    Route::resource('/user-management', UserManagementController::class)->only(['index', 'create', 'store', 'destroy']);
+    Route::prefix('/user-management')->group(function () {
+        Route::get('/roles', [UserManagementController::class, 'show_roles']);
+        Route::POST('/permanent', [UserManagementController::class, 'delete_permanently']);
+    });
 
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/home', [HomeController::class, 'index'])->name('home');

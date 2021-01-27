@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Policies;
+
+use App\Models\Role;
+use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
+
+class RolePolicy
+{
+    use HandlesAuthorization;
+
+    /**
+     * Create a new policy instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    public function grant_all(User $user, Role $roles)
+    {
+
+        return $user->roles_id === $roles->id;
+    }
+}

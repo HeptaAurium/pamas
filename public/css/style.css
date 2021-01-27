@@ -45,6 +45,7 @@ button:focus {
 #app {
   -webkit-transition: .4s ease;
   transition: .4s ease;
+  overflow-x: hidden !important;
 }
 
 .bg-default {
@@ -70,6 +71,14 @@ button:focus {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.padding {
+  padding-bottom: 3rem !important;
+}
+
+.panel {
+  padding: 1rem;
 }
 
 .clear-left {
@@ -156,12 +165,12 @@ button:focus {
   font-size: 1.8rem;
 }
 
-.newStaffForm .form-group {
+.form-group {
   margin: 24px auto;
 }
 
-.newStaffForm .form-control,
-.newStaffForm .custom-select {
+.form-control,
+.custom-select {
   border-color: green;
   background: transparent;
   border: none;
@@ -171,25 +180,25 @@ button:focus {
   margin: 16px auto;
 }
 
-.newStaffForm .form-control:focus,
-.newStaffForm .custom-select:focus {
+.form-control:focus,
+.custom-select:focus {
   outline: 0 !important;
   border: none !important;
 }
 
-.newStaffForm ::-webkit-input-placeholder {
+::-webkit-input-placeholder {
   color: #303030;
 }
 
-.newStaffForm :-ms-input-placeholder {
+:-ms-input-placeholder {
   color: #303030;
 }
 
-.newStaffForm ::-ms-input-placeholder {
+::-ms-input-placeholder {
   color: #303030;
 }
 
-.newStaffForm ::placeholder {
+::placeholder {
   color: #303030;
 }
 

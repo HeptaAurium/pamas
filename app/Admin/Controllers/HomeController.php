@@ -3,6 +3,8 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Role as Role;
+use Spatie\Permission\Models\Permission;
 use App\Models\Staff;
 use App\Models\SystemSetting;
 use App\Models\User;
@@ -28,6 +30,12 @@ class HomeController extends Controller
 
     public function index()
     {
+       
+     $role = Role::find(3);
+     $permission= Permission::where('id', 5)->get();
+
+     $role->syncPermissions($permission);
+       
         return view('home', $this->data);
     }
 }

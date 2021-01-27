@@ -166,6 +166,10 @@ return [
          * Package Service Providers...
          */
         Yajra\Datatables\DatatablesServiceProvider::class,
+        Infinety\Alerts\AlertServiceProvider::class,
+
+        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -189,7 +193,7 @@ return [
     */
 
     'aliases' => [
-
+        'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
@@ -228,7 +232,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         // 
-        'Datatables' => Yajra\DataTables\Facades\DataTables::class, 
+        'Datatables' => Yajra\DataTables\Facades\DataTables::class,
     ],
 
 ];

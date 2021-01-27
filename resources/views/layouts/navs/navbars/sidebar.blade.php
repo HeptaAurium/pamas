@@ -21,7 +21,7 @@
             <a class="nav-link" data-toggle="collapse" href="#staff_dd" aria-expanded="true">
                 <i class="fa fa-users" aria-hidden="true"></i>
                 {{ __('Staff Management') }}
-                <i class="fa fa-caret-down float-right" aria-hidden="true" style="padding: 5px;"></i>
+                <i class="fa fa-angle-right float-right" aria-hidden="true" style="padding: 5px;"></i>
 
             </a>
             <div class="collapse" id="staff_dd">
@@ -45,7 +45,31 @@
             <a class="nav-link" data-toggle="collapse" href="#departments" aria-expanded="true">
                 <i class="fa fa-building" aria-hidden="true"></i>
                 {{ __('Departments') }}
-                <i class="fa fa-caret-down float-right" aria-hidden="true" style="padding: 5px;"></i>
+                <i class="fa fa-angle-right float-right" aria-hidden="true" style="padding: 5px;"></i>
+
+            </a>
+            <div class="collapse" id="departments">
+                <ul class="nav">
+                    <li class="nav-item dropdown-item">
+                        <a class="nav-link" href="/staff">
+                            <span class="sidebar-mini"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                            <span class="sidebar-normal">{{ __('List Staff Members') }} </span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown-item">
+                        <a class="nav-link" href="/staff/create">
+                            <span class="sidebar-mini"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                            <span class="sidebar-normal">{{ __('Add Staff Member') }} </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+       <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#departments" aria-expanded="true">
+                <i class="fas fa-code-branch    "></i>
+                {{ __('Branches') }}
+                <i class="fa fa-angle-right float-right" aria-hidden="true" style="padding: 5px;"></i>
 
             </a>
             <div class="collapse" id="departments">
@@ -69,7 +93,7 @@
             <a class="nav-link" data-toggle="collapse" href="#allowances" aria-expanded="true">
                 <i class="fa fa-building" aria-hidden="true"></i>
                 {{ __('Allowances') }}
-                <i class="fa fa-caret-down float-right" aria-hidden="true" style="padding: 5px;"></i>
+                <i class="fa fa-angle-right float-right" aria-hidden="true" style="padding: 5px;"></i>
 
             </a>
             <div class="collapse" id="allowances">
@@ -88,17 +112,44 @@
                     </li>
                 </ul>
             </div>
+        </li> 
+       @hasrole('Super-Admin|Admin')
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#user-management" aria-expanded="true">
+              <i class="fas fa-user-slash    "></i>
+                {{ __('User management') }}
+                <i class="fa fa-angle-right float-right" aria-hidden="true" style="padding: 5px;"></i>
+
+            </a>
+            <div class="collapse" id="user-management">
+                <ul class="nav">
+                    <li class="nav-item dropdown-item">
+                        <a class="nav-link" href="/user-management">
+                            <span class="sidebar-mini"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                            <span class="sidebar-normal">{{ __('List Users') }} </span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown-item">
+                        <a class="nav-link" href="/user-management/create">
+                            <span class="sidebar-mini"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                            <span class="sidebar-normal">{{ __('Add user') }} </span>
+                        </a>
+                    </li> 
+                    <li class="nav-item dropdown-item">
+                        <a class="nav-link" href="/user-management/roles">
+                            <span class="sidebar-mini"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                            <span class="sidebar-normal">{{ __('User Roles') }} </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </li>
-    </ul>
-
-    <hr>
-
-    <ul class="nav justify-content-center flex-column position-relative" style="top:40vh">
+        @endhasrole
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#settings" aria-expanded="true">
                 <i class="fas fa-cogs    "></i>
                 {{ __('Set Up') }}
-                <i class="fa fa-caret-down float-right" aria-hidden="true" style="padding: 5px;"></i>
+                <i class="fa fa-angle-right float-right" aria-hidden="true" style="padding: 5px;"></i>
 
             </a>
             <div class="collapse" id="settings">
