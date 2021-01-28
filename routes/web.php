@@ -7,6 +7,8 @@ use App\Http\Controllers\BranchesController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\DeductionsController;
 use App\Http\Controllers\DepartmentsController;
+use App\Http\Controllers\GeneralHelperController;
+use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\PositionsController;
 use App\Http\Controllers\TaxGroupsController;
 use App\Http\Controllers\UserManagementController;
@@ -35,7 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/allowance', AllowancesController::class);
     Route::resource('/deduction', DeductionsController::class);
     Route::resource('/taxgroup', TaxGroupsController::class);
-    Route::resource('/user-management', UserManagementController::class)->only(['index', 'create', 'store', 'destroy']);
+
+    Route::resource('/user-management', UserManagementController::class)->only(['index', 'create', 'edit','store', 'update','destroy']);
     Route::prefix('/user-management')->group(function () {
         Route::get('/roles', [UserManagementController::class, 'show_roles']);
         Route::POST('/permanent', [UserManagementController::class, 'delete_permanently']);
@@ -47,4 +50,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('settings')->group(function () {
         Route::get('/business', [BusinessController::class, 'index']);
     });
+
+    // get allowance details
+    // Route::post('/get/allowance/details', [GeneralHelperController::class, 'get_allowance_details']);
 });
+
+Route::group(['middleware' => ['role:Super-Admin|Admin|Accountant']], function () {
+    //
+    Route::resource('/payroll', PayrollController::class);
+    Route::post('/edit/allowance', [StaffController::class, 'edit_allowance']);
+    Route::post('/edit/deduction', [StaffController::class, 'edit_deduction']);
+});
+

@@ -21,11 +21,12 @@
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
+                    @php $role = $user->roles->pluck('name')->first() @endphp
                         <tr>
                             <td>{{ $user->id }}</td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->roles->pluck('name')->first() }}</td>
+                            <td>{{ $role }}</td>
                             <td>{{ $user->last_login }}</td>
                             <td>
                                 @if ($user->online == 1)
@@ -40,12 +41,12 @@
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
                                             class="fa fa-bars" aria-hidden="true"></i></button>
                                     <div class="dropdown-menu" aria-labelledby="my-dropdown">
-                                        <a class="dropdown-item " href="#"> <i class="fas fa-pencil-alt    "></i> Edit</a>
+                                        <a class="dropdown-item  @if($user->id==auth()->user()->id || $role=="Super-Admin") disabled @endif" href="/user-management/{{ $user->id }}/edit"> <i class="fas fa-pencil-alt"></i> Edit</a>
                                         <form action="/user-management/{{ $user->id }}" method="POST"
                                             id="delUser{{ $user->id }}">
                                             @method('DELETE')
                                             @csrf
-                                            <a class="dropdown-item btnDeleteUser" data-form_id="delUser{{ $user->id }}"
+                                            <a class="dropdown-item btnDeleteUser @if($user->id==auth()->user()->id || $role=="Super-Admin") disabled @endif" data-form_id="delUser{{ $user->id }}"
                                                 type="submit"> <i class="fa fa-trash" aria-hidden="true"></i>
                                                 Deactivate</a>
                                         </form>
@@ -92,7 +93,7 @@
                                             <a class="dropdown-item " href="#">
                                                 <i class="fa fa-reply" aria-hidden="true"></i>
                                                 Restore</a>
-                                            
+
                                                 <a class="dropdown-item btnDeletePerm" data-user="{{ $item->id }}"
                                                     type="submit"> <i class="fa fa-stop" aria-hidden="true"></i>
                                                     Delete Permanently

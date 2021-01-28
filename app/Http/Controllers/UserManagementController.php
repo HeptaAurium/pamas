@@ -32,7 +32,6 @@ class UserManagementController extends Controller
     public function index()
     {
         //
-        Auth::user()->assignRole('Super-Admin');
         $this->data['users'] = User::where('active', 1)->orderBy('online', 'DESC')->orderBy('last_login', 'DESC')->get();
         $this->data['deactivated'] = User::where('active', 0)->get();
         return view('users.index', $this->data);
@@ -110,6 +109,9 @@ class UserManagementController extends Controller
     public function edit($id)
     {
         //
+        $this->data['user'] = User::find($id);
+
+        return view('users.edit', $this->data);
     }
 
     /**
@@ -122,6 +124,40 @@ class UserManagementController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $success = false;
+        $user = User::find($id);
+
+        if ($request->name != $user->name) {
+            $request->validate([
+                'name' => 'required|unique:users,name',
+            ]);
+            $user->name = $request->name;
+        }
+
+        if ($user->save()) {
+            $success = true;
+        } else {
+            $success = false;
+        }
+        $user = User::find($id);
+
+        $roles = $this->data['roles'];
+        foreach ($roles as $role) {
+            if ($user->hasRole($role->name)) {
+                $user->removeRole($role->name);
+            }
+        }
+
+        $user->assignRole($request->role);
+
+        if ($success) {
+            flash("Changes made successfully!")->success();
+        } else {
+            flash('An error occurred while processing your request! Kindly try again later!')->error();
+        }
+
+        return back();
     }
 
     /**

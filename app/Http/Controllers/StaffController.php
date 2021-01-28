@@ -7,6 +7,8 @@ use App\Models\Bank;
 use App\Models\Deduction;
 use App\Models\SystemSetting;
 use App\Models\Staff;
+use App\Models\StaffAllowance;
+use App\Models\StaffDeduction;
 use Doctrine\DBAL\Query\QueryException;
 use Exception;
 use Illuminate\Http\Request;
@@ -233,6 +235,37 @@ class StaffController extends Controller
         $staff->save();
         flash('Staff Member deactivated')->success();
 
+
+        return back();
+    }
+
+    // Edit allowances
+
+    public function edit_allowance(Request $request)
+    {
+
+
+        $allowances = Allowance::get();
+        foreach ($allowances as $allowance) {
+            $all_id = $allowance->id;
+            $st_all = StaffAllowance::where('staff_id', $request->staff_id)->where('allowance', $all_id)->first();
+
+            $st_all->amount = $request->$all_id;
+            $st_all->save();
+        }
+
+        return back();
+    }
+
+    public function edit_deduction(Request $request)
+    {
+        $deductions = Deduction::get();
+        foreach ($deductions as $deduction) {
+            $all_id = $deduction->id;
+            $st_all = StaffDeduction::where('staff_id', $request->staff_id)->where('deduction', $all_id)->first();
+            $st_all->amount = $request->$all_id;
+            $st_all->save();
+        }
 
         return back();
     }

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand navbar-light clear-left top-nav-main shadow fixed-top mb-3 bg-dark text-white">
     <div class="container">
-        <a class="navbar-brand logo-text text-white" href="{{ url('/') }}">
+        <a class="navbar-brand logo-text text-white d-md-none" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
         <button class="sidebar-toggler btn  text-white d-block d-md-none" type="button">

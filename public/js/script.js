@@ -72,4 +72,14 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('#tbl_payroll').DataTable({
+        "ordering": true,
+        'lengthChange': false,
+        'paging': true,
+    });
+
+
 });
+
+

@@ -16,7 +16,7 @@
                 Dashboard
             </a>
         </li>
-
+        @hasrole('Super-Admin|Admin|Accountant')
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#staff_dd" aria-expanded="true">
                 <i class="fa fa-users" aria-hidden="true"></i>
@@ -41,6 +41,8 @@
                 </ul>
             </div>
         </li>
+        @endhasrole
+        @hasrole('Super-Admin|Admin')
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#departments" aria-expanded="true">
                 <i class="fa fa-building" aria-hidden="true"></i>
@@ -112,8 +114,8 @@
                     </li>
                 </ul>
             </div>
-        </li> 
-       @hasrole('Super-Admin|Admin')
+        </li>
+
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#user-management" aria-expanded="true">
               <i class="fas fa-user-slash    "></i>
@@ -134,7 +136,7 @@
                             <span class="sidebar-mini"><i class="fa fa-circle" aria-hidden="true"></i></span>
                             <span class="sidebar-normal">{{ __('Add user') }} </span>
                         </a>
-                    </li> 
+                    </li>
                     <li class="nav-item dropdown-item">
                         <a class="nav-link" href="/user-management/roles">
                             <span class="sidebar-mini"><i class="fa fa-circle" aria-hidden="true"></i></span>
@@ -144,7 +146,7 @@
                 </ul>
             </div>
         </li>
-        @endhasrole
+
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#settings" aria-expanded="true">
                 <i class="fas fa-cogs    "></i>
@@ -169,5 +171,7 @@
                 </ul>
             </div>
         </li>
+
+        @endhasrole
     </ul>
 </div>
