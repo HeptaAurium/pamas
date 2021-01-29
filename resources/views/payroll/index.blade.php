@@ -3,10 +3,16 @@
 @section('title', 'Payroll Processing ')
 
 @section('content')
-    <div class="container px-3 py-3">
+    <div class="container px-3 py-3 payroll">
         <div class="panel">
             <div class="process">
-                <button class="btn btn-success btn-lg position-fixed" style="z-index:999;">Process Payroll</button>
+                <a  class="btn btn-success btn-lg position-fixed" id="btnProcessPayroll" style="z-index:999;" data-records="{{count($payrolls)}}">Process Payroll</a>
+            </div>
+            <div class="processing flex-center flex-column">
+                <div class="spinner-border text-primary" role="status">
+
+                </div>
+                <h3 class="display mt-4">Processing...</h3>
             </div>
             <table class="table table-dark table-striped table-bordered table-hover table-responsive-md shadow"
                 id="tbl_payroll">
@@ -55,6 +61,6 @@
     </div>
 
     {{-- Import modal --}}
-    
+
 
 @endsection

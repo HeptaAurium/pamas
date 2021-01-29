@@ -256,6 +256,29 @@ button:focus {
   cursor: pointer;
 }
 
+.payroll {
+  overflow-x: hidden !important;
+}
+
+.payroll .processing {
+  height: 100%;
+  width: 100%;
+  z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  overflow: hidden;
+  display: none !important;
+}
+
+.payroll .processing.show {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+}
+
 @media (max-width: 768px) {
   .clear-left {
     margin-left: 0 !important;

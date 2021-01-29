@@ -57,7 +57,9 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::group(['middleware' => ['role:Super-Admin|Admin|Accountant']], function () {
     //
-    Route::resource('/payroll', PayrollController::class);
+    Route::resource('/payroll', PayrollController::class)->only(['index', 'edit']);
+    Route::get('/payroll/show', [PayrollController::class,'show']);
+    Route::post('/payroll/process', [PayrollController::class, 'process']);
     Route::post('/edit/allowance', [StaffController::class, 'edit_allowance']);
     Route::post('/edit/deduction', [StaffController::class, 'edit_deduction']);
 });

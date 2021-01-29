@@ -70,12 +70,13 @@ button:focus {
     align-items: center;
 }
 
-.padding{
+.padding {
     padding-bottom: 3rem !important;
 }
-.panel{
+
+.panel {
     padding: 1rem;
-    
+
 }
 
 //
@@ -253,6 +254,27 @@ button:focus {
 
     .profile-pic {
         cursor: pointer;
+    }
+}
+
+.payroll {
+    overflow-x: hidden !important;
+
+    .processing {
+        height: 100%;
+        width: 100%;
+        z-index: 9999;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, .6);
+        color: #fff;
+        overflow: hidden;
+        display:none !important;
+    }
+
+    .processing.show{
+        display:flex !important;
     }
 }
 

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreatePayrollsTable extends Migration
@@ -14,9 +15,11 @@ class CreatePayrollsTable extends Migration
     public function up()
     {
         Schema::create('payrolls', function (Blueprint $table) {
-                 $table->increments('id');
+            $table->increments('id');
             $table->integer('staff_id');
             $table->float('basal');
+            $table->float('gross_pay');
+            $table->float('net_pay');
             $table->float('total_additions');
             $table->float('total_deductions');
             $table->float('tax');
@@ -26,6 +29,27 @@ class CreatePayrollsTable extends Migration
             $table->string('year');
             $table->timestamps();
         });
+
+        Schema::create('deductions', function (Blueprint $table) {
+            $table->integerIncrements('id');
+            $table->string('name');
+            $table->timestamps();
+        });
+
+        Schema::create('allowances', function (Blueprint $table) {
+            $table->integerIncrements('id');
+            $table->string('name');
+            $table->timestamps();
+        }); 
+        
+        Schema::create('banks', function (Blueprint $table) {
+            $table->integerIncrements('id');
+            $table->string('name');
+            $table->integer('is_primary')->default(0);
+            $table->timestamps();
+        });
+
+       
     }
 
     /**
