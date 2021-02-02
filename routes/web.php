@@ -38,29 +38,39 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/deduction', DeductionsController::class);
     Route::resource('/taxgroup', TaxGroupsController::class);
 
-    Route::resource('/user-management', UserManagementController::class)->only(['index', 'create', 'edit','store', 'update','destroy']);
+    Route::resource('/user-management', UserManagementController::class)->only(['index', 'create', 'edit', 'store', 'update', 'destroy']);
     Route::prefix('/user-management')->group(function () {
         Route::get('/roles', [UserManagementController::class, 'show_roles']);
         Route::POST('/permanent', [UserManagementController::class, 'delete_permanently']);
     });
+
 
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     Route::prefix('settings')->group(function () {
         Route::get('/business', [BusinessController::class, 'index']);
+        Route::post('/update', [BusinessController::class, 'update']);
+    });
+    Route::prefix('settings')->group(function () {
+        Route::get('/business', [BusinessController::class, 'index']);
+        Route::post('/update', [BusinessController::class, 'update']);
     });
 
-    // get allowance details
-    // Route::post('/get/allowance/details', [GeneralHelperController::class, 'get_allowance_details']);
+    // Edit staff allowance details
+    Route::get('/allowance/edit/{id}', [AllowancesController::class, 'staff_allowances']);
+    Route::post('/allowance/update', [AllowancesController::class, 'staff_allowances_update']);
+    
+    // Edit staff deduction details
+    Route::get('/deduction/edit/{id}', [DeductionsController::class, 'staff_deductions']);
+    Route::post('/deduction/update', [DeductionsController::class, 'staff_deductions_update']);
 });
 
 Route::group(['middleware' => ['role:Super-Admin|Admin|Accountant']], function () {
     //
     Route::resource('/payroll', PayrollController::class)->only(['index', 'edit']);
-    Route::get('/payroll/show', [PayrollController::class,'show']);
+    Route::get('/payroll/show', [PayrollController::class, 'show']);
     Route::post('/payroll/process', [PayrollController::class, 'process']);
     Route::post('/edit/allowance', [StaffController::class, 'edit_allowance']);
     Route::post('/edit/deduction', [StaffController::class, 'edit_deduction']);
 });
-

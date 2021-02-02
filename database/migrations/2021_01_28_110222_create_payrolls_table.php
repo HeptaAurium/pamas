@@ -30,17 +30,23 @@ class CreatePayrollsTable extends Migration
             $table->timestamps();
         });
 
+      
         Schema::create('deductions', function (Blueprint $table) {
             $table->integerIncrements('id');
             $table->string('name');
             $table->timestamps();
         });
 
+        DB::update("ALTER TABLE deductions AUTO_INCREMENT = 9500;");
+
         Schema::create('allowances', function (Blueprint $table) {
             $table->integerIncrements('id');
             $table->string('name');
             $table->timestamps();
         }); 
+
+        DB::update("ALTER TABLE allowances AUTO_INCREMENT = 9500;");
+
         
         Schema::create('banks', function (Blueprint $table) {
             $table->integerIncrements('id');

@@ -279,16 +279,13 @@ button:focus {
   display: flex !important;
 }
 
-@media (max-width: 768px) {
-  .clear-left {
-    margin-left: 0 !important;
-  }
-}
-
 @media (max-width: 576px) {
   .sidebar-main {
     width: 0 !important;
     margin-left: -30px !important;
+  }
+  .clear-left {
+    margin-left: 0 !important;
   }
   .sidebar-main.toggle {
     width: 100% !important;

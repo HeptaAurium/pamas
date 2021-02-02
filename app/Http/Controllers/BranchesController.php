@@ -3,10 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
+use App\Models\Staff;
+use App\Models\SystemSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BranchesController extends Controller
 {
+
+    protected $data;
+
+    public function __construct()
+    {
+        global $data;
+        $hasPrimaryBank = true;
+
+        $this->data = &$data;
+        $this->data['settings'] = SystemSetting::find(1);
+        $this->data['staff'] = Staff::get();
+        $this->data['departments'] = DB::table('departments')->get();
+        $this->data['branches'] = DB::table('branches')->get();
+        $this->data['position'] = DB::table('staff_positions')->get();
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +35,7 @@ class BranchesController extends Controller
     public function index()
     {
         //
+        return view('branches.index', $this->data);
     }
 
     /**
@@ -25,6 +46,7 @@ class BranchesController extends Controller
     public function create()
     {
         //
+        return view('branches.create', $this->data);
     }
 
     /**
@@ -74,6 +96,8 @@ class BranchesController extends Controller
     public function edit(Branch $branch)
     {
         //
+        $this->data['bran'] = $branch;
+        return view('branches.edit', $this->data);
     }
 
     /**
@@ -86,6 +110,17 @@ class BranchesController extends Controller
     public function update(Request $request, Branch $branch)
     {
         //
+        if ($branch->name != $request->name) {
+            $branch->name = $request->name;
+            if ($branch->save()) {
+                flash(trans('feedback.update_success'))->success();
+            } else {
+                flash(trans('feedback.update_error'))->error();
+            }
+        } else {
+            flash("No changes made!")->warning();
+        }
+        return back();
     }
 
     /**
@@ -97,5 +132,12 @@ class BranchesController extends Controller
     public function destroy(Branch $branch)
     {
         //
+        if ($branch->delete()) {
+            flash("Branch " . trans('feedback.discarded_success'))->success();
+        } else {
+            flash(trans('delete_error'))->error();
+        }
+
+        return back();
     }
 }

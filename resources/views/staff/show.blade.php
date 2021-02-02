@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @php $staff_name = $staff->firstname . ' ' . $staff->lastname @endphp
-@section('title',  $staff_name )
+@section('title', $staff_name)
 
 @section('content')
     <div class="staff-profiles px-3 py-3">
@@ -20,10 +20,14 @@
                                         <p class="text-muted font-size-sm">
                                             {{ $staff['department'] . ', ' . $staff['branch'] }}
                                         </p>
-                                        <button class="btn btn-primary btn-block">Edit Details</button>
-                                        <button class="btn btn-danger my-2"> <i class="fas fa-file-pdf    "></i> Print
-                                            Profile Card</button>
-
+                                        <a href="/staff/{{ $staff->id }}/edit" class="btn btn-primary btn-block">
+                                           <i class="fa fa-pencil-alt" aria-hidden="true"></i>
+                                            Edit Details
+                                        </a>
+                                        <button class="btn btn-danger my-2">
+                                            <i class="fas fa-file-pdf"></i>
+                                            Print Profile Card
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -125,17 +129,24 @@
                             <div class="col-sm-6 mb-3">
                                 <div class="card h-100">
                                     <div class="card-body">
-                                       
+
                                         <div class="pb-2">
-                                            <h6 class="bg-secondary text-white p-2 mb-4 align-items-center">Allowances 
+                                            <h6 class="bg-secondary text-white p-2 mb-4 align-items-center">Allowances
                                                 @if ($settings->allowance_grouping == 0)
-                                                <button class="btn text-white float-right p-0"> <i class="fa fa-pencil-alt" aria-hidden="true"></i> </button>
-                                              @endif                                                  
+
+                                                @endif
                                             </h6>
                                             <div class="row">
                                                 @foreach ($allowance as $item)
-                                                    <div class="col-4">
-                                                        <small>{{ $item['name'] }}</small>
+                                                    <div class="col-6">
+                                                        <label class="bg-light w-100 px-1">
+                                                            <small>
+                                                                {{ $item['name'] }} <a
+                                                                    href="/allowance/edit/{{ $item['id'] }}"
+                                                                    class="btn float-right p-0"> <i class="fa fa-pencil-alt"
+                                                                        aria-hidden="true"></i> </a>
+                                                            </small>
+                                                        </label>
                                                         <div>
                                                             KSH {{ number_format($item['amount']) }}
                                                         </div>
@@ -145,14 +156,18 @@
                                         </div>
                                         <div class="pb-2">
                                             <h6 class="bg-secondary text-white p-2 mb-2">Deductions
-                                                @if ($settings->deduction_grouping == 0)
-                                                <button class="btn text-white float-right p-0"> <i class="fa fa-pencil-alt" aria-hidden="true"></i> </button>
-                                              @endif 
                                             </h6>
                                             <div class="row">
                                                 @foreach ($deduction as $ded)
-                                                    <div class="col-4">
-                                                        <small>{{ $ded['name'] }}</small>
+                                                    <div class="col-6">
+                                                        <label class="bg-light w-100 px-1">
+                                                            <small>
+                                                                {{ $ded['name'] }}<a
+                                                                    href="/deduction/edit/{{ $item['id'] }}"
+                                                                    class="btn float-right p-0"> <i class="fa fa-pencil-alt"
+                                                                        aria-hidden="true"></i> </a>
+                                                            </small>
+                                                        </label>
                                                         <div>
                                                             KSH {{ number_format($ded['amount']) }}
                                                         </div>

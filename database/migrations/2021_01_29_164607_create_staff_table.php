@@ -65,14 +65,14 @@ class CreateStaffTable extends Migration
             $table->bigIncrements('id');
             $table->integer('staff_id');
             $table->string('allowance');
-            $table->float('amount');
+            $table->float('amount')->default(0);
             $table->timestamps();
         });
         Schema::create('staff_deductions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('staff_id');
             $table->string('deduction');
-            $table->float('amount');
+            $table->float('amount')->default(0);
             $table->timestamps();
         });
         Schema::create('staff_positions', function (Blueprint $table) {

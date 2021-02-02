@@ -49,7 +49,7 @@ $(document).ready(function () {
         var id = $(this).data('user');
         Swal.fire({
             icon: 'warning',
-            text: 'Do you want to delete this? This action is irreversible',
+            text: 'Do you want to delete this user? This action is irreversible',
             showCancelButton: true,
             confirmButtonText: 'Delete',
             confirmButtonColor: '#e3342f',
@@ -83,7 +83,12 @@ $(document).ready(function () {
         'lengthChange': false,
         'paging': true,
     });
-     $('#payroll_processed').DataTable({
+     $('.dedall').DataTable({
+        "ordering": true,
+        'lengthChange': false,
+        'paging': true,
+    });
+    $('#payroll_processed').DataTable({
         "ordering": true,
         'lengthChange': false,
         'paging': true,
@@ -155,6 +160,30 @@ $(document).ready(function () {
             }
         });
     }
+
+    $('.btnDepartDel').click(function (e) {
+        e.preventDefault();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        var id = $(this).data('form_id');
+        Swal.fire({
+            icon: 'warning',
+            text: 'Do you want to delete this department? This action is irreversible',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            confirmButtonColor: '#e3342f',
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                $('#' + id).submit();
+            }
+        });
+    });
 
 });
 

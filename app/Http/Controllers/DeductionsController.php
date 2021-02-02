@@ -2,11 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\GeneralHelper;
 use App\Models\Deduction;
+use App\Models\Staff;
+use App\Models\StaffDeduction;
+use App\Models\SystemSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use projects\name\Log;
 
 class DeductionsController extends Controller
 {
+
+    public function __construct()
+    {
+        global $data;
+        $this->data = &$data;
+
+        $this->data['settings'] = SystemSetting::find(1);
+        $this->data['tax_groups'] = DB::table('tax_groups')->get();
+        $this->data['departments'] = DB::table('departments')->get();
+        $this->data['branches'] = DB::table('branches')->get();
+        $this->data['position'] = DB::table('staff_positions')->get();
+        $this->data['deductions'] = Deduction::get();
+        $this->data['staff'] = Staff::get();
+        $this->data['staff_deductions'] = DB::table('staff_deductions')->get();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +36,7 @@ class DeductionsController extends Controller
     public function index()
     {
         //
+        return view('deductions.index', $this->data);
     }
 
     /**
@@ -25,6 +47,8 @@ class DeductionsController extends Controller
     public function create()
     {
         //
+
+        return view('deductions.create', $this->data);
     }
 
     /**
@@ -43,10 +67,13 @@ class DeductionsController extends Controller
 
 
         try {
-            $create = new Deduction;
-            $create->create($input);
-
-            flash('Deduction added successfully!')->success();
+            $create = Deduction::create($input);
+            if (GeneralHelper::add_deduction($create->id)) {
+                flash('Deduction added successfully!')->success();
+            } else {
+                Deduction::where('id', $create->id)->delete();
+                flash('We encountered an error while processing your request! Try again later!')->error();
+            }
         } catch (\Throwable $th) {
             flash('We encountered an error while processing your request! Try again later!')->error();
         }
@@ -74,6 +101,8 @@ class DeductionsController extends Controller
     public function edit(Deduction $deduction)
     {
         //
+        $this->data['deduction'] = $deduction;
+        return view('deductions.edit', $this->data);
     }
 
     /**
@@ -86,6 +115,17 @@ class DeductionsController extends Controller
     public function update(Request $request, Deduction $deduction)
     {
         //
+        if ($deduction->name != $request->name) {
+            $deduction->name = $request->name;
+            if ($deduction->save()) {
+                flash(trans('feedback.update_success'))->success();
+            } else {
+                flash(trans('feedback.update_error'))->error();
+            }
+        } else {
+            flash("No changes made!")->warning();
+        }
+        return back();
     }
 
     /**
@@ -97,5 +137,48 @@ class DeductionsController extends Controller
     public function destroy(Deduction $deduction)
     {
         //
+        //
+        try {
+            StaffDeduction::where('deduction', $deduction->id)->delete();
+            if ($deduction->delete()) {
+                flash("Deduction " . trans('feedback.discarded_success'))->success();
+            }
+        } catch (\Throwable $th) {
+            \Log::error($th);
+
+            flash(trans('delete_error'))->error();
+        }
+
+
+        return back();
+    }
+
+    // Edit staff deductions
+
+    public function staff_deductions($id)
+    {
+        $deduction = DB::table('staff_deductions')->where('id', $id)->first();
+
+        $this->data['staff'] = Staff::where('id', $deduction->staff_id)->first();
+        $this->data['deduction'] = $deduction;
+
+        return view('deductions.staff-deductions', $this->data);
+    }
+    public function staff_deductions_update(Request $request)
+    {
+        $id = $request->deduction_id;
+        // dd($request);
+        try {
+            DB::table('staff_deductions')
+                ->where('id', $id)
+                ->update(['amount' => $request->deduction]);
+
+            flash(trans('feedback.update_success'))->success();
+        } catch (\Throwable $th) {
+            \Log::error($th);
+            flash(trans('feedback.update_error'))->error();
+        }
+
+        return back();
     }
 }

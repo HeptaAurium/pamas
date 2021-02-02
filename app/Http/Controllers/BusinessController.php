@@ -96,9 +96,57 @@ class BusinessController extends Controller
      * @param  \App\Models\Business  $business
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Business $business)
+    public function update(Request $request)
     {
         //
+        $id = $request->id;
+        $success = false;
+        $business = SystemSetting::find($id);
+
+        if ($business->business_name != $request->business_name) $business->business_name = $request->business_name;
+
+        if ($business->multi_branch != $request->multi_branch) $business->multi_branch = $request->multi_branch;
+
+        if ($business->tax_relief != $request->tax_relief) $business->tax_relief = $request->tax_relief;
+        $business->include_income_tax = $request->taxation;
+
+        // if ($request->hasFile('logo')) {
+        //     $path = $request->file('logo')->storeAs(
+        //         'uploads',
+        //         $request->file('logo')->getClientOriginalName()
+        //     );
+        //     $business->business_logo = $path;
+        // }
+
+
+        if ($business->save()) {
+            $success = true;
+        } else {
+            $success = false;
+        }
+
+        // Update primary banks
+        $banks = Bank::where('is_primary', 1)->first();
+        $banks->is_primary = 0; //remove primary bank
+        if ($request->bank == 0) {
+            // if no primary bank set, let it remain so
+        } else {
+            $banks = Bank::where('id', $request->bank)->first();
+            $banks->is_primary = 1;
+        }
+
+        if ($banks->save()) {
+            $success = true;
+        } else {
+            $success = false;
+        }
+
+        if ($success) {
+            flash("Changes updated successfully!")->success();
+        } else {
+            flash('We encountered an error while processing your request! Try again later!')->error();
+        }
+        return back();
     }
 
     /**

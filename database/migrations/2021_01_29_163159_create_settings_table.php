@@ -23,6 +23,7 @@ class CreateSettingsTable extends Migration
             $table->integer('deductions_grouping');
             $table->integer('has_primary_bank');
             $table->integer('tax_relief');
+            $table->integer('include_income_tax');
             $table->timestamps();
         });
 
@@ -35,7 +36,8 @@ class CreateSettingsTable extends Migration
                 'allowance_grouping'=>0,
                 'deductions_grouping'=>0,
                 'has_primary_bank'=>1,
-                'tax_relief'=>1280,
+                'tax_relief'=>0,
+                'include_income_tax'=>0,
             )
         );
     }

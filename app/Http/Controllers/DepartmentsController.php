@@ -2,11 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bank;
 use App\Models\Department;
+use App\Models\Staff;
+use App\Models\SystemSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DepartmentsController extends Controller
 {
+
+    protected $data;
+
+    public function __construct()
+    {
+        global $data;
+        $hasPrimaryBank = true;
+
+        $this->data = &$data;
+        $this->data['settings'] = SystemSetting::find(1);
+        $this->data['staff'] = Staff::get();
+        $this->data['departments'] = DB::table('departments')->get();
+        $this->data['branches'] = DB::table('branches')->get();
+        $this->data['position'] = DB::table('staff_positions')->get();
+        $this->data['primary_bank'] = Bank::where('is_primary', 1)->first();
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +37,8 @@ class DepartmentsController extends Controller
     public function index()
     {
         //
+
+        return  view('departments.index', $this->data);
     }
 
     /**
@@ -25,6 +49,8 @@ class DepartmentsController extends Controller
     public function create()
     {
         //
+
+        return view('departments.create', $this->data);
     }
 
     /**
@@ -74,6 +100,8 @@ class DepartmentsController extends Controller
     public function edit(Department $department)
     {
         //
+        $this->data['depart'] = $department;
+        return view('departments.edit', $this->data);
     }
 
     /**
@@ -86,6 +114,17 @@ class DepartmentsController extends Controller
     public function update(Request $request, Department $department)
     {
         //
+        if ($department->name != $request->name) {
+            $department->name = $request->name;
+            if ($department->save()) {
+                flash(trans('feedback.update_success'))->success();
+            } else {
+                flash(trans('feedback.update_error'))->error();
+            }
+        } else {
+            flash("No changes made!")->warning();
+        }
+        return back();
     }
 
     /**
@@ -97,5 +136,12 @@ class DepartmentsController extends Controller
     public function destroy(Department $department)
     {
         //
+        if ($department->delete()) {
+            flash("Department discarded successfully!")->success();
+        } else {
+            flash('We encountered an error while processing your request! Try again later!')->error();
+        }
+
+        return back();
     }
 }

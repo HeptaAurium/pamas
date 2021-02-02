@@ -18,7 +18,8 @@
                 <!-- Authentication Links -->
                 @hasrole('Super-Admin|Admin|Accountant')
                 <li class="nav-item dropdown">
-                    <a id="btnPayroll" class="nav-link btn btn-success btn-sm mr-3 text-white" href="/payroll" role="">
+                    <a id="btnPayroll" class="nav-link btn btn-success btn-sm mr-3 px-3 text-white" href="/payroll" role="">
+                        <i class="fas fa-money-bill"></i> &nbsp;&nbsp;  
                         {{ __('Payroll') }}
                     </a>
                 </li>

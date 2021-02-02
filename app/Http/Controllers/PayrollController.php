@@ -142,8 +142,13 @@ class PayrollController extends Controller
             $grossPay = $allowance + $basal;
             $taxable_income = $grossPay - $deductions;
 
-            $tax = Self::calc_PAYE($taxable_income);
-            $netPay = $grossPay - $tax;
+            if ($this->data['settings']->include_income_tax == 1) {
+                $tax = Self::calc_PAYE($taxable_income);
+            } else {
+                $tax = 0;
+            }
+
+            $netPay = $grossPay - ($tax + $deductions);
 
             $payroll = Payroll::where('staff_id', $staff->id)
                 ->where('month', Date('m'))

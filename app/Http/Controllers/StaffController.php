@@ -116,10 +116,13 @@ class StaffController extends Controller
                 $allowances = Allowance::get();
                 foreach ($allowances as $allowance) {
                     $allow_id = $allowance->id;
+                    $amount = $request->$allow_id;
+                    $amount == "" || empty($amount) ? $amount = 0 : $amount = $amount;
+
                     DB::table('staff_allowances')->insert([
                         'staff_id' => $staff_id,
                         'allowance' => $allow_id,
-                        'amount' => $request->$allow_id,
+                        'amount' =>  $amount,
                         'created_at' => Date('Y-m-d H:i:s'),
                         'updated_at' => Date('Y-m-d H:i:s')
                     ]);
@@ -130,9 +133,11 @@ class StaffController extends Controller
                 $deductions = Deduction::get();
                 foreach ($deductions as $deduction) {
                     $ded_id = $deduction->id;
+                    $amount = $request->$ded_id;
+                    $amount == "" || empty($amount) ? $amount = 0 : $amount = $amount;
                     DB::table('staff_deductions')->insert([
                         'staff_id' => $staff_id,
-                        'deduction' => $ded_id,
+                        'deduction' => $amount,
                         'amount' => $request->$ded_id,
                         'created_at' => Date('Y-m-d H:i:s'),
                         'updated_at' => Date('Y-m-d H:i:s'),
@@ -176,7 +181,8 @@ class StaffController extends Controller
             foreach ($staff_allowances as $item) {
                 $array = [
                     'name' => Allowance::where('id', $item->allowance)->pluck('name')->first(),
-                    'amount' => $item->amount
+                    'amount' => $item->amount,
+                    'id'=>$item->id,
                 ];
 
                 array_push($this->data['allowance'], $array);
@@ -206,6 +212,7 @@ class StaffController extends Controller
     public function edit(Staff $staff)
     {
         //
+        return view('staff.edit', $this->data);
     }
 
     /**
