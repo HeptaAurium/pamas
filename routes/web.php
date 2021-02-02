@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/allowance', AllowancesController::class);
     Route::resource('/deduction', DeductionsController::class);
     Route::resource('/taxgroup', TaxGroupsController::class);
+    Route::resource('/bank', TaxGroupsController::class);
 
     Route::resource('/user-management', UserManagementController::class)->only(['index', 'create', 'edit', 'store', 'update', 'destroy']);
     Route::prefix('/user-management')->group(function () {
@@ -60,7 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Edit staff allowance details
     Route::get('/allowance/edit/{id}', [AllowancesController::class, 'staff_allowances']);
     Route::post('/allowance/update', [AllowancesController::class, 'staff_allowances_update']);
-    
+
     // Edit staff deduction details
     Route::get('/deduction/edit/{id}', [DeductionsController::class, 'staff_deductions']);
     Route::post('/deduction/update', [DeductionsController::class, 'staff_deductions_update']);

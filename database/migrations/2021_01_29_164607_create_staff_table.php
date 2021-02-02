@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateStaffTable extends Migration
@@ -85,6 +86,11 @@ class CreateStaffTable extends Migration
             $table->string('name');
             $table->timestamps();
         });
+        $tg = [
+            ['name' => 'PAYE'],
+        ];
+
+        DB::table('tax_groups')->insert($tg);
     }
 
     /**

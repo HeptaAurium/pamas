@@ -184,108 +184,132 @@
                         </div>
                     </div>
                     <div class="col-md-12 bg-light py-4  my-2">
-                        <div class="form-group my-2">
+                        <div class="form-group my-2 d-flex flex-column">
                             <label for="">Primary Bank</label>
                             <div class="row">
                                 <div class="col-6">
-                                    @if ($globals['hasPrimaryBank'])
-                                        <input id="" class="form-control" type="text" name=""
-                                            value="{{ $primary_bank->name }}" readonly>
-                                        <input type="hidden" value="{{ $primary_bank->id }}" name="bank">
-                                    @else
-
-                                        <select id="bank" class="custom-select" name="bank">
-                                            @foreach ($banks as $item)
-                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                            @endforeach
+                                    @if (count($banks) == 0)
+                                        <select id="" class="custom-select" name="">
+                                            <option>No banks added yet, please add banks before proceeding</option>
                                         </select>
-
+                                    @else
+                                        @if ($globals['hasPrimaryBank'])
+                                            <input id="" class="form-control" type="text" name=""
+                                                value="{{ $primary_bank->name }}" readonly>
+                                            <input type="hidden" value="{{ $primary_bank->id }}" name="bank">
+                                        @else
+                                            <select id="bank" class="custom-select" name="bank">
+                                                @foreach ($banks as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        @endif
                                     @endif
                                 </div>
                                 <div class="col-6">
                                     <input id="account_no" class="form-control" type="number" name="account_no"
                                         placeholder="Primary account number" required>
-
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group my-2">
-                            <label for="">Secondary Bank</label>
-                            <div class="row">
-                                <div class="col-6">
+
+                            <div class="col-12 mt-5">
+                                <button class="btn btn-sm btn-primary position-absolute my-3" style="bottom:0"
+                                    data-toggle="modal" data-target="#addBankModal">
+                                    <i class="fa fa-plus-square" aria-hidden="true"></i> Add Bank
+                                </button>
+                            </div>
+
+                    </div>
+                    <div class="form-group my-2">
+                        <label for="">Secondary Bank</label>
+                        <div class="row">
+                            <div class="col-6">
+                                @if (count($banks) == 0)
+                                    <select id="" class="custom-select" name="">
+                                        <option>No banks added yet, please add banks before proceeding</option>
+                                    </select>
+                                @else
                                     <select id="bank" class="custom-select" name="secondary_bank">
                                         @foreach ($banks as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                </div>
-                                <div class="col-6">
-                                    <input id="" class="form-control" type="number" name="secondary_acc"
-                                        placeholder="Secondary account number" required>
+                                @endif
+                            </div>
+                            <div class="col-6">
+                                <input id="" class="form-control" type="number" name="secondary_acc"
+                                    placeholder="Secondary account number" required>
 
-                                </div>
                             </div>
                         </div>
+                        <div class="col-12 mt-5">
+                            <button class="btn btn-sm btn-primary position-absolute my-3" style="bottom:0"
+                                data-toggle="modal" data-target="#addBankModal">
+                                <i class="fa fa-plus-square" aria-hidden="true"></i> Add Bank
+                            </button>
+                        </div>  
                     </div>
-                    @if ($settings->allowance_grouping == 0)
-                        <div class="bg-light col-md-6 position-relative border-right my-3 py-4" style="height: auto;">
-                            <label for="">Allowances</label>
-                            <div class="row">
-                                @if (count($allowances) == 0)
+                </div>
+                @if ($settings->allowance_grouping == 0)
+                    <div class="bg-light col-md-6 position-relative border-right my-3 py-4" style="height: auto;">
+                        <label for="">Allowances</label>
+                        <div class="row">
+                            @if (count($allowances) == 0)
                                 <div class="flex-center text-dark text-muted" style="height: 150px;">
                                     <h2 class="text-center p-2">Available allowances will appear here once added!</h2>
                                 </div>
                             @endif
-                               
-                                @foreach ($allowances as $item)
-                                    <div class="col-6 mb-2">
-                                        <input id="" class="form-control allowance" type="number" name="{{ $item->id }}"
-                                            placeholder="{{ $item->name }} Allowance">
-                                    </div>
-                                  
-                                @endforeach
-                                <input class="form-control" type="hidden" id="allowanceArray" name="allowances[]" value="">
-                            </div>
 
-                            <button class="btn btn-sm btn-primary position-absolute my-3" style="bottom:0"
-                                data-toggle="modal" data-target="#addAllowanceModal">
-                                <i class="fa fa-plus-square" aria-hidden="true"></i> Add Allowance
-                            </button>
-                        </div>
-                    @endif
-                    @if ($settings->deductions_grouping == 0)
-                        <div class="bg-light col-md-6 position-relative my-3 py-4" style="height: auto;">
-                            <label for="">Deductions</label>
-                            @if (count($deductions) == 0)
-                                <div class="flex-center" style="height: 150px;">
-                                    <h2 class="display text-dark text-muted text-center p-2">Available deductions will appear here once added!</h2>
+                            @foreach ($allowances as $item)
+                                <div class="col-6 mb-2">
+                                    <input id="" class="form-control allowance" type="number" name="{{ $item->id }}"
+                                        placeholder="{{ $item->name }} Allowance">
                                 </div>
-                            @endif
-                            <div class="row">
 
-                                @foreach ($deductions as $item)
-                                    <div class="col-6 mb-2">
-                                        <input id="" class="form-control deduction" type="number" name="{{ $item->id }}"
-                                            placeholder="{{ $item->name }}">
+                            @endforeach
+                            <input class="form-control" type="hidden" id="allowanceArray" name="allowances[]" value="">
+                        </div>
 
-                                            </div>
-                                          
-                                          @endforeach
-                                        <input type="hidden" name="deductions" id="deductionArray">
-                                    </div>
-                                    <button class="btn btn-sm btn-primary position-absolute my-3" style="bottom:0"
-                                        data-toggle="modal" data-target="#addDeductionModal">
-                                        <i class="fa fa-plus-square" aria-hidden="true"></i> Add Deduction
-                                    </button>
-                            </div>
-                    @endif
-                    <div class="col-12 my-2 py-5 bg-light">
-                        <button class="btn btn-lg btn-success btn-block mt-3" type="submit">Save</button>
-                        <button class="btn btn-secondary my-3" onclick="clearForm(newStaffForm)">Clear Form</button>
+                        <button class="btn btn-sm btn-primary position-absolute my-3" style="bottom:0" data-toggle="modal"
+                            data-target="#addAllowanceModal">
+                            <i class="fa fa-plus-square" aria-hidden="true"></i> Add Allowance
+                        </button>
                     </div>
+                @endif
+                @if ($settings->deductions_grouping == 0)
+                    <div class="bg-light col-md-6 position-relative my-3 py-4" style="height: auto;">
+                        <label for="">Deductions</label>
+                        @if (count($deductions) == 0)
+                            <div class="flex-center" style="height: 150px;">
+                                <h2 class="display text-dark text-muted text-center p-2">Available deductions will
+                                    appear here once added!</h2>
+                            </div>
+                        @endif
+                        <div class="row">
+
+                            @foreach ($deductions as $item)
+                                <div class="col-6 mb-2">
+                                    <input id="" class="form-control deduction" type="number" name="{{ $item->id }}"
+                                        placeholder="{{ $item->name }}">
+
+                                </div>
+
+                            @endforeach
+                            <input type="hidden" name="deductions" id="deductionArray">
+                        </div>
+                        <button class="btn btn-sm btn-primary position-absolute my-3" style="bottom:0" data-toggle="modal"
+                            data-target="#addDeductionModal">
+                            <i class="fa fa-plus-square" aria-hidden="true"></i> Add Deduction
+                        </button>
+                    </div>
+                @endif
+                <div class="col-12 my-2 py-5 bg-light">
+                    <button class="btn btn-lg btn-success btn-block mt-3" type="submit">Save</button>
+                    <button class="btn btn-secondary my-3" onclick="clearForm(newStaffForm)">Clear Form</button>
                 </div>
             </div>
-        </form>
+    </div>
+    </form>
     </div>
     {{-- Modals --}}
     @include('modals.add-branch')
@@ -294,7 +318,8 @@
     @include('modals.add-allowance')
     @include('modals.add-deduction')
     @include('modals.add-taxgroup')
+    @include('modals.add-bank')
 
-    {{-- --}}
+    {{--  --}}
     @include('layouts.navs.footer')
 @endsection
