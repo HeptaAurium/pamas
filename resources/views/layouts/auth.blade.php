@@ -9,16 +9,19 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-    @include('layouts.extras.css')
+
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <script src="https://kit.fontawesome.com/961e992204.js" crossorigin="anonymous"></script>
+    {{-- @include('layouts.extras.css') --}}
 
 </head>
 
 <body>
-    <div id="app">
-        <main class="pb-4 bg-white min-vh-100 mt-5">
-            @yield('content')
-        </main>
-    </div>
+
+    <main class="login-page">
+        @yield('content')
+    </main>
+
     @include('layouts.extras.js')
 </body>
 

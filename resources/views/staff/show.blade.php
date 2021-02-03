@@ -24,10 +24,10 @@
                                            <i class="fa fa-pencil-alt" aria-hidden="true"></i>
                                             Edit Details
                                         </a>
-                                        <button class="btn btn-danger my-2">
+                                        {{-- <button class="btn btn-danger my-2">
                                             <i class="fas fa-file-pdf"></i>
                                             Print Profile Card
-                                        </button>
+                                        </button> --}}
                                     </div>
                                 </div>
                             </div>

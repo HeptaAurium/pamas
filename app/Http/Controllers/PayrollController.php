@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\GeneralHelper;
 use App\Models\Allowance;
 use App\Models\Bank;
 use App\Models\Branch;
 use App\Models\Deduction;
 use App\Models\Department;
 use App\Models\Payroll;
+use App\Models\PayrollTotal;
 use App\Models\Staff;
 use App\Models\StaffAllowance;
 use App\Models\StaffDeduction;
@@ -130,55 +132,7 @@ class PayrollController extends Controller
 
     public function process(Request $request)
     {
-        $staffs = Staff::where('active', 1)->get();
-        $success = false;
-
-
-        foreach ($staffs as $staff) {
-            $allowance = StaffAllowance::where('staff_id', $staff->id)->sum('amount');
-            $deductions = StaffDeduction::where('staff_id', $staff->id)->sum('amount');
-            $basal = $staff->basal;
-
-            $grossPay = $allowance + $basal;
-            $taxable_income = $grossPay - $deductions;
-
-            if ($this->data['settings']->include_income_tax == 1) {
-                $tax = Self::calc_PAYE($taxable_income);
-            } else {
-                $tax = 0;
-            }
-
-            $netPay = $grossPay - ($tax + $deductions);
-
-            $payroll = Payroll::where('staff_id', $staff->id)
-                ->where('month', Date('m'))
-                ->Where('year', Date('Y'))
-                ->first();
-
-            if (!empty($payroll)) {
-                $payroll->basal = $staff->basal;
-                $payroll->gross_pay = $grossPay;
-                $payroll->net_pay = $netPay;
-                $payroll->total_additions = $allowance;
-                $payroll->total_deductions = $deductions;
-                $payroll->tax = $tax;
-                if ($payroll->save()) $success = true;
-            } else {
-                $payroll = new Payroll;
-                $payroll->staff_id = $staff->id;
-                $payroll->basal = $staff->basal;
-                $payroll->gross_pay = $grossPay;
-                $payroll->net_pay = $netPay;
-                $payroll->total_additions = $allowance;
-                $payroll->total_deductions = $deductions;
-                $payroll->tax = $tax;
-                $payroll->bank = $staff->bank;
-                $payroll->account_no = $staff->account_no;
-                $payroll->month = Date('m');
-                $payroll->year = Date('Y');
-                if ($payroll->save()) $success = true;
-            }
-        }
+        $success = PayrollTotal::compute_payroll();
 
         if ($success) {
             echo json_encode(['status' => 'success']);
@@ -186,29 +140,5 @@ class PayrollController extends Controller
             echo json_encode(['status' => 'fail']);
         }
         // return back();
-    }
-
-    static function calc_PAYE($income)
-    {
-        $relief = SystemSetting::where('id',)->pluck('tax_relief')->first();
-        if ($income > 0 && $income < 11180) {
-            $tax = 0.1 * $income;
-        } elseif ($income > 11180 && $income <= 21715) {
-            $tax_1 = 10 / 100 * 11180;
-            $taxableBal = $income - 11180;
-            $tax_2 = 15 / 100 * $taxableBal;
-            $tax = $tax_1 + $tax_2;
-        } elseif ($income > 21715  && $income <= 32249) {
-            $taxableBal = $income - 21714;
-            $tax = (2698 + 0.2 * $taxableBal);
-        } elseif ($income > 32249  && $income <= 42728) {
-            $taxableBal = $income - 32249;
-            $tax = (4804 + 0.25 * $taxableBal);
-        } else {
-            $taxableBal = $income - 42782;
-            $tax = (7438 + 0.3 * $taxableBal);
-        }
-
-        return $tax - (int)$relief;
     }
 }

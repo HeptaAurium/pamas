@@ -83,7 +83,7 @@ $(document).ready(function () {
         'lengthChange': false,
         'paging': true,
     });
-     $('.dedall').DataTable({
+    $('.dedall').DataTable({
         "ordering": true,
         'lengthChange': false,
         'paging': true,
@@ -173,7 +173,7 @@ $(document).ready(function () {
         var id = $(this).data('form_id');
         Swal.fire({
             icon: 'warning',
-            text: 'Do you want to delete this department? This action is irreversible',
+            text: 'Are you sure you want to delete the selected item? This action is irreversible',
             showCancelButton: true,
             confirmButtonText: 'Delete',
             confirmButtonColor: '#e3342f',
@@ -183,6 +183,17 @@ $(document).ready(function () {
                 $('#' + id).submit();
             }
         });
+    });
+
+    $('a.target-link').on('click', function (e) {
+        e.preventDefault();
+
+        var targetDiv = $(this).data('target');
+        // alert(targetDiv);
+        $('.business_settings .panel').removeClass('active');
+        $('.target-link').removeClass('active');
+        $(this).addClass('active');
+        $(targetDiv).addClass('active').fadeIn();
     });
 
 });

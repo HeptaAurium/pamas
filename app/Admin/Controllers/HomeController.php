@@ -3,6 +3,8 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Payroll;
+use App\Models\PayrollTotal;
 use Spatie\Permission\Models\Role as Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\Staff;
@@ -26,16 +28,14 @@ class HomeController extends Controller
         $this->data['position'] = DB::table('staff_positions')->get();
         $this->data['users'] = User::get();
         $this->data['staff'] = Staff::get();
+        $this->data['payrollTotals'] = PayrollTotal::get();
     }
 
     public function index()
     {
-       
-     $role = Role::find(3);
-     $permission= Permission::where('id', 5)->get();
 
-     $role->syncPermissions($permission);
-       
+        $last = PayrollTotal::latest()->first();
+        $this->data['latest'] = $last;
         return view('home', $this->data);
     }
 }

@@ -125,21 +125,7 @@ class BusinessController extends Controller
             $success = false;
         }
 
-        // Update primary banks
-        $banks = Bank::where('is_primary', 1)->first();
-        $banks->is_primary = 0; //remove primary bank
-        if ($request->bank == 0) {
-            // if no primary bank set, let it remain so
-        } else {
-            $banks = Bank::where('id', $request->bank)->first();
-            $banks->is_primary = 1;
-        }
 
-        if ($banks->save()) {
-            $success = true;
-        } else {
-            $success = false;
-        }
 
         if ($success) {
             flash("Changes updated successfully!")->success();

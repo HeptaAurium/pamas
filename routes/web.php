@@ -3,6 +3,7 @@
 use App\Admin\Controllers\HomeController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\AllowancesController;
+use App\Http\Controllers\BanksController;
 use App\Http\Controllers\BranchesController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\DeductionsController;
@@ -37,7 +38,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/allowance', AllowancesController::class);
     Route::resource('/deduction', DeductionsController::class);
     Route::resource('/taxgroup', TaxGroupsController::class);
-    Route::resource('/bank', TaxGroupsController::class);
+    Route::resource('/bank', BanksController::class);
+
+    Route::post('/bank/update/primary', [BanksController::class, 'update_primary']);
 
     Route::resource('/user-management', UserManagementController::class)->only(['index', 'create', 'edit', 'store', 'update', 'destroy']);
     Route::prefix('/user-management')->group(function () {

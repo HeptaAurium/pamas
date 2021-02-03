@@ -6,6 +6,7 @@ use App\Models\Staff;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Filesystem\Cache;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 class GeneralHelper
@@ -46,7 +47,7 @@ class GeneralHelper
             return false;
         }
     }
-     static function add_deduction($id)
+    static function add_deduction($id)
     { //Set the amount for this new deduction to zero for all registered staff members;
         $staff = Staff::get();
         try {
@@ -66,4 +67,8 @@ class GeneralHelper
             return false;
         }
     }
+
+    // Compute Totals
+
+
 }

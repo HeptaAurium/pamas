@@ -146,7 +146,9 @@ class StaffController extends Controller
             }
 
             flash('Staff member successfully added!')->success();
+
         } catch (\Throwable $th) {
+            \LOG::error($th);
             flash('An error was encountered while processing your request! Try again later!')->success();
         }
 
@@ -182,7 +184,7 @@ class StaffController extends Controller
                 $array = [
                     'name' => Allowance::where('id', $item->allowance)->pluck('name')->first(),
                     'amount' => $item->amount,
-                    'id'=>$item->id,
+                    'id' => $item->id,
                 ];
 
                 array_push($this->data['allowance'], $array);

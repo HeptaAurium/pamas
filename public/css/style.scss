@@ -3,6 +3,17 @@
     src: url("../fonts/UnifrakturMaguntia-Regular.ttf");
 }
 
+body,
+input {
+    font-family: 'Poppins', sans-serif;
+
+}
+
+body {
+    margin: 0 !important;
+}
+
+
 .flash {
     position: absolute !important;
     right: 0;
@@ -89,6 +100,169 @@ button:focus {
     padding: 16px 10px;
 }
 
+// login
+.login-page {
+
+    .container {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        background-color: #fff03333;
+        overflow: hidden;
+
+        &::before {
+            content: '';
+            position: absolute;
+            width: 2000px;
+            height: 2000px;
+            border-radius: 50%;
+            background: linear-gradient(-45deg, #4481eb, #04befe);
+            top: -10%;
+            right: 48%;
+            transform: translateY(-50%);
+        }
+
+        .forms-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            // background-color: #fff;
+
+            form {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                grid-row: 1 /2;
+                grid-column: 1 /2;
+                z-index: 9;
+
+                .title {
+                    font-size: 2.2rem;
+                    color: #444;
+                    margin-bottom: 10px;
+
+                }
+
+                .input-field {
+                    max-width: 380px;
+                    width: 100%;
+                    height: 55px;
+                    background-color: #f0f0f0;
+                    margin: 10px 0;
+                    border-radius: 55px;
+                    display: grid;
+                    grid-template-columns: 15% 85%;
+                    padding: 0 .4rem;
+
+                    i {
+                        text-align: center;
+                        line-height: 55px;
+                        color: #acacac;
+                        font-size: 1.1rem;
+                    }
+
+                    input {
+                        background: none;
+                        outline: none;
+                        border: none;
+                        line-height: 1;
+                        font-weight: 600;
+                        font-size: 1.1rem;
+                        color: #333;
+
+                        &::placeholder {
+                            color: #aaa;
+                            font-weight: 500;
+                        }
+                    }
+                }
+            }
+
+            .btn {
+                width: 150px;
+                height: 49px;
+                border: none;
+                outline: none;
+                border-radius: 49px;
+                cursor: pointer;
+                background-color: #5995fd;
+                color: #fff;
+                text-transform: uppercase;
+                font-weight: 600;
+                margin: 10px 0;
+                transition: .5s;
+
+                &:hover {
+                    background-color: #4d84e2;
+                }
+            }
+
+            .signin-signup {
+                position: absolute;
+                top: 50%;
+                left: 75%;
+                transform: translate(-50%, -50%);
+                width: 50%;
+                display: grid;
+                grid-template-columns: 1fr;
+                z-index: 5;
+            }
+        }
+
+        .panels-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            // background-color: green;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            z-index: 2;
+
+            .panel {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                justify-content: space-around;
+                text-align: center;
+
+                .content {
+                    color: #fff;
+
+                    h3 {
+                        font-weight: 600;
+                        line-height: 1;
+                        font-size: 1.5rem;
+                    }
+
+                    p {
+                        font-size: 0.95rem;
+                        padding: 0.7rem 0;
+                    }
+                }
+            }
+
+            .left-panel {
+                padding: 3rem 17% 2rem 12%;
+                // pointer-events: all;
+            }
+
+            .image {
+                width: 100%;
+            }
+
+            // .content,
+            // .image {
+            //     transform: translateX(800px);
+            // }
+        }
+    }
+}
+
 // top
 .top-nav-main {
     background-color: #04010e57;
@@ -98,6 +272,7 @@ button:focus {
         color: #fff;
     }
 }
+
 
 // Sidebar
 
@@ -270,23 +445,103 @@ button:focus {
         background: rgba(0, 0, 0, .6);
         color: #fff;
         overflow: hidden;
-        display:none !important;
+        display: none !important;
     }
 
-    .processing.show{
-        display:flex !important;
+    .processing.show {
+        display: flex !important;
     }
 }
 
-@media (max-width:768px) {
+.business_settings {
+    .panel {
+        display: none;
+        transition: .4s;
+    }
 
+    .panel.active {
+        display: block !important;
+
+    }
 }
+
+@media (max-width:870px) {
+    .login-page {
+        .container {
+            min-height: 800px !important;
+            height: 100vh;
+
+            &::before {
+                // display: none;
+                width: 1500px;
+                height: 1500px;
+                left: 30%;
+                bottom: 68%;
+                transform: translateX(-50%);
+                right: initial;
+                top: initial;
+            }
+
+            .signin-signup {
+                width: 100%;
+                left: 50% !important;
+                top: 95%;
+                transform: translate(-50%, -100%);
+            }
+
+            .panels-container {
+                // background-color: green;
+                z-index: 10;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 2fr 1fr;
+
+                // .content,
+                // .image {
+                //     transform: translateY(300px);
+                // }
+
+                .panel {
+                    flex-direction: row;
+                    justify-content: space-around;
+                    align-items: center;
+                    padding: 2.5rem 8%;
+
+                    .content {
+                        padding-right: 15%;
+
+                        h3 {
+                            font-size: 1.4rem;
+                            line-height: 1.4;
+                        }
+
+                        p {
+                            font-size: .7rem;
+                            padding: .7rem 0;
+                        }
+                    }
+                }
+
+                .image {
+                    width: 400px;
+                }
+
+                .left-panel {
+                    grid-row: 1 /2;
+                }
+            }
+
+        }
+    }
+}
+
+@media (max-width:768px) {}
 
 @media(max-width:576px) {
     .sidebar-main {
         width: 0 !important;
         margin-left: -30px !important;
     }
+
     .clear-left {
         margin-left: 0 !important;
     }
@@ -294,5 +549,34 @@ button:focus {
     .sidebar-main.toggle {
         width: 100% !important;
         margin-left: 0 !important;
+    }
+
+    .login-page {
+        .container {
+            .panels-container {
+                .image {
+                    width: 150px;
+                }
+
+                .content {
+                    padding-right: 0% !important;
+
+                    h3 {
+                        font-size: 1.0rem !important;
+                        font-weight: 500 !important;
+                    }
+
+                    p {
+                        font-size: .5rem !important;
+                        line-height: 1;
+                    }
+                }
+            }
+
+            .signin-signup {
+                width: 90%!important;
+                margin: 0 auto !important;
+            }
+        }
     }
 }
