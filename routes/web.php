@@ -43,11 +43,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/bank/update/primary', [BanksController::class, 'update_primary']);
 
     Route::resource('/user-management', UserManagementController::class)->only(['index', 'create', 'edit', 'store', 'update', 'destroy']);
+
     Route::prefix('/user-management')->group(function () {
         Route::get('/roles', [UserManagementController::class, 'show_roles']);
         Route::POST('/permanent', [UserManagementController::class, 'delete_permanently']);
     });
 
+    // Upload csv
+Route::post('/staff/upload/csv', [StaffController::class, 'upload_csv']);
 
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/home', [HomeController::class, 'index'])->name('home');

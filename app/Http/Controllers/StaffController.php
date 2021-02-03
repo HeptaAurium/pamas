@@ -146,7 +146,6 @@ class StaffController extends Controller
             }
 
             flash('Staff member successfully added!')->success();
-
         } catch (\Throwable $th) {
             \LOG::error($th);
             flash('An error was encountered while processing your request! Try again later!')->success();
@@ -214,6 +213,9 @@ class StaffController extends Controller
     public function edit(Staff $staff)
     {
         //
+        $this->data['staff'] = $staff;
+        $this->data['allowance'] = StaffAllowance::where('staff_id', $staff->id)->get();
+        $this->data['deduction'] = StaffDeduction::where('staff_id', $staff->id)->get();
         return view('staff.edit', $this->data);
     }
 
@@ -276,6 +278,96 @@ class StaffController extends Controller
             $st_all->save();
         }
 
+        return back();
+    }
+
+    // Upload csv
+
+    public function upload_csv(Request $request)
+    {
+        // dd($request);
+        $file = $request->file('csv');
+
+        // File Details 
+        $filename = $file->getClientOriginalName();
+        $extension = $file->getClientOriginalExtension();
+        $tempPath = $file->getRealPath();
+        $fileSize = $file->getSize();
+        $mimeType = $file->getMimeType();
+
+        // Valid File Extensions
+        $valid_extension = array("csv");
+
+        // 2MB in Bytes
+        $maxFileSize = 2097152;
+
+        // Check file extension
+        if (in_array(strtolower($extension), $valid_extension)) {
+
+            // Check file size
+            if ($fileSize <= $maxFileSize) {
+
+                // File upload location
+                $location = 'uploads';
+
+                // Upload file
+                $file->move($location, $filename);
+
+                // Import CSV to Database
+                $filepath = public_path($location . "/" . $filename);
+
+                // Reading file
+                $file = fopen($filepath, "r");
+
+                $importData_arr = array();
+                $i = 0;
+
+                while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
+                    $num = count($filedata);
+
+                    // Skip first row (Remove below comment if you want to skip the first row)
+                    /*if($i == 0){
+                      $i++;
+                      continue; 
+                   }*/
+                    for ($c = 0; $c < $num; $c++) {
+                        $importData_arr[$i][] = $filedata[$c];
+                    }
+                    $i++;
+                }
+                fclose($file);
+                $i = 0;
+                // Insert to MySQL database
+                foreach ($importData_arr as $importData) {
+                    if ($i == 0) {
+                        continue;
+                    }
+                    $insertData = array(
+                        "staff_unique_id" => $importData[0],
+                        "national_id" => $importData[1],
+                        "firstname" => $importData[2],
+                        "middlename" => $importData[3],
+                        "lastname" => $importData[4],
+                        "phone" => $importData[5],
+                        "email" => $importData[6],
+                        "basal" => $importData[7],
+                        "emergencypno" => $importData[8],
+                        "emergencyemail" => $importData[9],
+                        "accountno" => $importData[10],
+                        "active" => 1,
+                    );
+                    Staff::insertData($insertData);
+                    $i++;
+                }
+
+                flash('Import Successful.')->success();
+            } else {
+                flash('File too large. File must be less than 2MB.')->error();
+            }
+        } else {
+            flash('Invalid File Extension.')->error();
+        }
+        // Redirect to index
         return back();
     }
 }
