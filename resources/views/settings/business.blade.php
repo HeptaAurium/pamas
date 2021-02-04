@@ -10,6 +10,9 @@
         </div>
         <div class="panel bg-gradient-dark rounded padding mt-3" id="banks">
             @include('settings.partials.banks')
+        </div> 
+        <div class="panel bg-gradient-dark rounded padding mt-3" id="positions">
+            @include('settings.partials.positions')
         </div>
     </div>
 @endsection

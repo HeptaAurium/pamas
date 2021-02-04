@@ -11,17 +11,38 @@
                         <div class="card h-100">
                             <div class="card-body">
                                 <div class="d-flex flex-column align-items-center text-center">
-                                    <img src="{{ asset($staff->photo) }}"
-                                        alt="{{ $staff->firstname . __(' ') . $staff->lastname }}"
-                                        class="rounded-circle profile-pic" width="150">
+                                    <div class="position-relative">
+                                        @if (empty($staff->photo) || $staff->photo == '')
+                                            <div class="rounded-circle flex-center bg-secondary my-2 p-2 shadow edit-pic"
+                                                style="width:150px;height:150px;">
+                                                <h1 class="display-4 text-light"
+                                                    style="font-family: 'Yusei Magic', sans-serif;">
+                                                    <span>{{ $staff->firstname[0] }}</span><span>{{ $staff->lastname[0] }}</span>
+                                                </h1>
+                                            </div>
+                                        @else
+                                            <img src="{{ asset($staff->photo) }}"
+                                                class="rounded-circle profile-pic edit-pic" width="150">
+                                        @endif
+                                        <div class="prof-img-div flex-center">
+                                            <button class="btn bg-transparent" data-toggle="modal"
+                                                data-target="#editStaffProfilePic" type="button">
+                                                <i class="fa fa-camera-retro" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                     <div class="mt-3">
                                         <h4 class="text-dark">{{ $staff->firstname . ' ' . $staff->lastname }}</h4>
                                         <p class="text-secondary mb-1">{{ $staff['position'] }}</p>
-                                        <p class="text-muted font-size-sm">
+                                        <p class="text-muted font-size-sm mb-1">
                                             {{ $staff['department'] . ', ' . $staff['branch'] }}
+                                        </p> 
+                                        <p class="text-muted font-size-sm mb-1">
+                                            Gender : {{ ucfirst($staff->gender) }} <br>
+                                            Age: {{$staff['age']}} years
                                         </p>
                                         <a href="/staff/{{ $staff->id }}/edit" class="btn btn-primary btn-block">
-                                           <i class="fa fa-pencil-alt" aria-hidden="true"></i>
+                                            <i class="fa fa-pencil-alt" aria-hidden="true"></i>
                                             Edit Details
                                         </a>
                                         {{-- <button class="btn btn-danger my-2">
@@ -184,4 +205,5 @@
             </div>
         </div>
     </div>
+    @include('modals.edit-staff-pic')
 @endsection

@@ -86,6 +86,20 @@ class PositionsController extends Controller
     public function update(Request $request, Position $position)
     {
         //
+
+        if($position->name != $request->name){
+            $position->name = $request->name;
+
+            if($position->save()){
+                flash(trans('feedback.update_success'))->success();
+            }else{
+                flash(trans('feedback.update_error'))->error();
+            }
+        }else{
+            flash('No change detected!')->warning();
+        }
+
+        return back();
     }
 
     /**
@@ -97,5 +111,13 @@ class PositionsController extends Controller
     public function destroy(Position $position)
     {
         //
+        
+        if ($position->delete()) {
+            flash("Position " . trans('feedback.deleted_success'))->success();
+        } else {
+            flash(trans('feedback.delete_error'))->error();
+        }
+
+        return back();
     }
 }

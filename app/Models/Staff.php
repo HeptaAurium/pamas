@@ -15,7 +15,7 @@ class Staff extends Model
     protected $table = "staff";
 
     protected $fillable = [
-        "firstname", "middlename", "lastname", "phone", "secondarypno", "email", "secondaryemail", "emergencypno", "emergencyemail", "location", "estate", "houseno", "staff_unique_id", "national_id", "branch_id", "department_id", "position", "tscno", "basal", "tax_groups", "fileno", "bank", "account_no", "secondary_acc", "secondary_bank",
+        "firstname", "middlename", "lastname", "phone", "secondarypno", "email", "secondaryemail", "emergencypno", "emergencyemail", "location", "estate", "houseno", "staff_unique_id", "national_id", "branch_id", "department_id", "position", "tscno", "basal", "tax_groups", "fileno", "bank", "account_no", "secondary_acc", "secondary_bank","gender", "dob"
     ];
 
     static function insertData($data)
@@ -32,5 +32,12 @@ class Staff extends Model
         // }
 
         DB::table('staff')->insert($data);
+    }
+
+    public function getTableColumns() {
+        return $this
+            ->getConnection()
+            ->getSchemaBuilder()
+            ->getColumnListing($this->getTable());
     }
 }

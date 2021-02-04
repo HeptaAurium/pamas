@@ -16,9 +16,11 @@ use Illuminate\Support\Facades\DB;
 // use Yajra\Datatables\Facades\Datatables;
 use Datatables;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Sentry\Serializer\Serializer;
 use Sentry\ClientBuilderInterface;
 use Sentry;
+use Carbon\Carbon;
 
 class StaffController extends Controller
 {
@@ -174,6 +176,7 @@ class StaffController extends Controller
         $this->data['staff']['position'] = DB::table('staff_positions')->where('id', $staff->position)->pluck('name')->first();
         $this->data['staff']['bank'] = DB::table('banks')->where('id', $staff->bank)->pluck('name')->first();
         $this->data['staff']['sec_bank'] = DB::table('banks')->where('id', $staff->secondary_bank)->pluck('name')->first();
+        $this->data['staff']['age'] = Carbon::parse(strtotime($staff->dob))->age;
 
         $setting = $this->data['settings'];
 
@@ -216,6 +219,8 @@ class StaffController extends Controller
         $this->data['staff'] = $staff;
         $this->data['allowance'] = StaffAllowance::where('staff_id', $staff->id)->get();
         $this->data['deduction'] = StaffDeduction::where('staff_id', $staff->id)->get();
+
+
         return view('staff.edit', $this->data);
     }
 
@@ -229,6 +234,23 @@ class StaffController extends Controller
     public function update(Request $request, Staff $staff)
     {
         //
+        $inputs = $request->except(['_token', '_method']);
+        $updates = [];
+
+        foreach ($inputs as $key => $value) {
+            $original = $staff->getOriginal($key);
+
+            if ($original != $value) {
+                $staff->$key = $value;
+            }
+        }
+        if ($staff->save()) {
+            flash(trans('feedback.update_success'))->success();
+        } else {
+            flash(trans('feedback.update_error'))->error();
+        }
+
+        return back();
     }
 
     /**
@@ -288,7 +310,7 @@ class StaffController extends Controller
         // dd($request);
         $file = $request->file('csv');
 
-        // File Details 
+        // File Details
         $filename = $file->getClientOriginalName();
         $extension = $file->getClientOriginalExtension();
         $tempPath = $file->getRealPath();
@@ -328,7 +350,7 @@ class StaffController extends Controller
                     // Skip first row (Remove below comment if you want to skip the first row)
                     /*if($i == 0){
                       $i++;
-                      continue; 
+                      continue;
                    }*/
                     for ($c = 0; $c < $num; $c++) {
                         $importData_arr[$i][] = $filedata[$c];
@@ -368,6 +390,43 @@ class StaffController extends Controller
             flash('Invalid File Extension.')->error();
         }
         // Redirect to index
+        return back();
+    }
+
+    public function profile(Request $request)
+    {
+        if ($request->hasFile('profile')) {
+            //
+
+            $staff = Staff::find($request->staff_id);
+            try {
+                //code...
+                // $path = $request->file('profile')->storeAs(
+                //     'staff',
+                //     $request->file('profile')->getClientOriginalName(),
+                //     'public'
+                // );
+
+                $destinationPath = '/img/staff/';
+                $file = $request->file('profile');
+                $filename = $file->getClientOriginalName();
+                $file->move(public_path() . $destinationPath, $filename);
+                $path = $destinationPath . $filename;
+
+                $staff->photo = $path;
+
+                if ($staff->save()) {
+                    flash(trans('feedback.upload_success'))->success();
+                }
+            } catch (\Throwable $th) {
+                //throw $th;
+                \Log::error($th);
+                flash(trans('feedback.upload_error'))->error();
+            }
+        } else {
+            flash('Please provide a valid photo!')->warning();
+        }
+
         return back();
     }
 }

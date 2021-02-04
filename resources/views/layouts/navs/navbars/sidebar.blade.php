@@ -36,6 +36,18 @@
                             <span class="sidebar-mini"><i class="fa fa-circle" aria-hidden="true"></i></span>
                             <span class="sidebar-normal">{{ __('Previous Payrolls') }} </span>
                         </a>
+                    </li> 
+                    <li class="nav-item dropdown-item">
+                        <a class="nav-link" href="/payroll/show">
+                            <span class="sidebar-mini"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                            <span class="sidebar-normal">{{ __('Mail Payslips') }} </span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown-item">
+                        <a class="nav-link" href="/payroll/show">
+                            <span class="sidebar-mini"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                            <span class="sidebar-normal">{{ __('Mailed Payslips') }} </span>
+                        </a>
                     </li>
                 </ul>
             </div>

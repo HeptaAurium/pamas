@@ -5,4 +5,7 @@
     <li class="nav-item">
         <a class="btn nav-link target-link" data-target="#banks">Banks</a>
     </li>
+    <li class="nav-item">
+        <a class="btn nav-link target-link" data-target="#positions">Positions</a>
+    </li>
 </ul>

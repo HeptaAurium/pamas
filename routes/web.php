@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
-    Route::resource('/staff', StaffController::class);
+
     Route::resource('/allowance', AllowancesController::class);
     Route::resource('/branch', BranchesController::class);
     Route::resource('/department', DepartmentsController::class);
@@ -50,7 +50,13 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     // Upload csv
-Route::post('/staff/upload/csv', [StaffController::class, 'upload_csv']);
+
+
+    Route::post('/staff/upload/csv', [StaffController::class, 'upload_csv']);
+    Route::post('/staff/profile', [StaffController::class, 'profile']);
+    Route::resource('/staff', StaffController::class);
+
+
 
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -77,6 +83,7 @@ Route::group(['middleware' => ['role:Super-Admin|Admin|Accountant']], function (
     //
     Route::resource('/payroll', PayrollController::class)->only(['index', 'edit']);
     Route::get('/payroll/show', [PayrollController::class, 'show']);
+    Route::get('/payroll/filter', [PayrollController::class, 'filter']);
     Route::post('/payroll/process', [PayrollController::class, 'process']);
     Route::post('/edit/allowance', [StaffController::class, 'edit_allowance']);
     Route::post('/edit/deduction', [StaffController::class, 'edit_deduction']);

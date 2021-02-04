@@ -92,10 +92,7 @@ $(document).ready(function () {
         "ordering": true,
         'lengthChange': false,
         'paging': true,
-        dom: 'Bfrtip',
-        buttons: [
-            'copy', 'excel', 'pdf', 'print'
-        ]
+
     });
 
     $('#btnProcessPayroll').click(function (e) {
@@ -196,6 +193,35 @@ $(document).ready(function () {
         $(targetDiv).addClass('active').fadeIn();
     });
 
+    $('input.readonly').click(function (e) {
+        e.preventDefault();
+        $(this).parent('div').addClass('hide');
+        $(this).parent('div').next().removeClass('hide');
+    });
+
+    $('select.filter').on('change', function () {
+        var month = $('select#filter_month').val();
+        var year = $('select#filter_year').val();
+
+        $.ajax({
+            type: "get",
+            url: "/payroll/filter",
+            data: {
+                month: month,
+                year: year
+            },
+            // dataType: "dataType",
+            success: function (response) {
+                $('#payroll_data').fadeOut().empty();
+                $('#payroll_data').fadeIn().append(response);
+            }
+        });
+    });
+
+    $('button.btn-send-mails').click(function (e) { 
+        e.preventDefault();
+        
+    });
 });
 
 
