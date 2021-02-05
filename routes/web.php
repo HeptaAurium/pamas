@@ -12,6 +12,7 @@ use App\Http\Controllers\GeneralHelperController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PositionsController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaxGroupsController;
 use App\Http\Controllers\UserManagementController;
 use Illuminate\Support\Facades\Auth;
@@ -79,6 +80,10 @@ Route::group(['middleware' => 'auth'], function () {
     // Edit staff deduction details
     Route::get('/deduction/edit/{id}', [DeductionsController::class, 'staff_deductions']);
     Route::post('/deduction/update', [DeductionsController::class, 'staff_deductions_update']);
+
+    Route::prefix('/profile')->group(function(){
+        Route::get('/edit', [ProfileController::class, 'index']);
+    });
 });
 
 Route::group(['middleware' => ['role:Super-Admin|Admin|Accountant']], function () {

@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('online')->default(0);
             $table->integer('active')->default(1);
             $table->integer('deleted_by')->nullable();
+            $table->string('photo')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
