@@ -184,7 +184,7 @@
                                                         <label class="bg-light w-100 px-1">
                                                             <small>
                                                                 {{ $ded['name'] }}<a
-                                                                    href="/deduction/edit/{{ $item['id'] }}"
+                                                                    href="/deduction/edit/{{ $ded['id'] }}"
                                                                     class="btn float-right p-0"> <i class="fa fa-pencil-alt"
                                                                         aria-hidden="true"></i> </a>
                                                             </small>
