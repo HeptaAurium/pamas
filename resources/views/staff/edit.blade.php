@@ -232,7 +232,8 @@
                                                 @php
                                                     $gender = $staff->gender;
                                                 @endphp
-                                                <div class="col-12 text-secondary @if ($gender=='') hide @endif">
+                                                <div class="col-12 text-secondary @if ($gender==''
+                                                    ) hide @endif">
                                                     <input type="text" class="form-control readonly"
                                                         value="{{ ucfirst($gender) }}" placeholder="Phone number" name=""
                                                         readonly>
@@ -312,7 +313,9 @@
                                             </h6>
                                             <small>Basic Salary</small>
                                             <div class="mb-3">
-                                                {{ number_format($staff->basal) }}
+                                                <input type="text" class="form-control" name="basal"
+                                                    value="{{ $staff->basal }}">
+
                                             </div>
                                             <div class="pb-2">
                                                 <h6 class="bg-secondary text-white p-2 mb-4 align-items-center">

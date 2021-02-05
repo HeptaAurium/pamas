@@ -16,7 +16,7 @@
                     <select id="filter_month" class="custom-select filter" name="month">
                         @php
                             $start = Date('01-01-2000');
-                            
+
                         @endphp
                         @for ($i = 0; $i < 12; $i++)
                             @php $month = Date('m', strtotime('+' . $i . ' month', strtotime($start))); @endphp
@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div class="col-md-6 float-right pull-right text-right mt-2 align-items-center">
-                <button class="btn btn-flat btn-danger">
+                <button class="btn btn-flat btn-danger" data-toggle="modal" data-target="#printConfigModal">
                     <i class="fa fa-file-pdf" aria-hidden="true"></i> Export to PDF
                 </button>
                 <button class="btn btn-flat btn-info btn-send-mails">
@@ -103,4 +103,6 @@
             </tbody>
         </table>
     </div>
+    @php $document = "standing_orders"; @endphp
+    @include('modals.print')
 @endsection

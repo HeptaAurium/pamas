@@ -145,4 +145,35 @@ class BusinessController extends Controller
     {
         //
     }
+
+    public function logo(Request $request)
+    {
+        if ($request->hasFile('logo')) {
+            //
+
+            $settings = SystemSetting::find($request->settings_id);
+            try {
+
+                $destinationPath = '/img/business/';
+                $file = $request->file('logo');
+                $filename = $file->getClientOriginalName();
+                $file->move(public_path() . $destinationPath, $filename);
+                $path = $destinationPath . $filename;
+
+                $settings->business_logo = $path;
+
+                if ($settings->save()) {
+                    flash(trans('feedback.upload_success'))->success();
+                }
+            } catch (\Throwable $th) {
+                //throw $th;
+                \Log::error($th);
+                flash(trans('feedback.upload_error'))->error();
+            }
+        } else {
+            flash('Please provide a valid photo!')->warning();
+        }
+
+        return back();
+    }
 }

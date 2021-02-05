@@ -27,15 +27,31 @@
                     value="{{ $settings->tax_relief }}" required>
             </div>
         </div>
-        {{-- <div class="col-sm-11 col-md-6  col-md-offset-2 my-1">
-                    <div class="form-group p-2 rounded border bg-light flex-center"
-                        style="height: 117px;">
-                        <div class="custom-file">
-                            <input id="logo" class="custom-file-input" type="file" name="logo">
-                            <label for="logo" class="custom-file-label">Business Logo</label>
+        <div class="col-sm-11 col-md-4  col-md-offset-2 my-1">
+            <div class="form-group p-2 rounded border bg-light">
+                <label for="" class="display">Business Logo</label>
+                <div class="flex-center position-relative">
+                    @if (empty($settings->business_logo) || $settings->business_logo == '')
+                        <div class="rounded-circle flex-center bg-secondary my-2 p-2 shadow edit-pic"
+                            style="width:150px;height:150px;">
+                            <h1 class="display-4 text-light" style="font-family: 'Yusei Magic', sans-serif;">
+                                <span>{{ $settings->business_name[0] }}</span></span>
+                            </h1>
                         </div>
+                    @else
+                        <img src="{{ asset($settings->business_logo) }}" class="rounded-circle profile-pic edit-pic"
+                            width="150">
+                    @endif
+                    <div class="prof-img-div flex-center">
+                        <button class="btn bg-transparent" data-toggle="modal" data-target="#editBusinessLogo"
+                            type="button">
+                            <i class="fa fa-camera-retro" aria-hidden="true"></i>
+                        </button>
                     </div>
-                </div> --}}
+
+                </div>
+            </div>
+        </div>
         <div class="col-sm-11 col-md-4  col-md-offset-2 my-1">
             <div class="form-group p-2 rounded border bg-light">
                 <label for="taxation" class="display">Include taxation</label>
@@ -50,4 +66,4 @@
         </div>
     </div>
 </form>
-
+@include('modals.add-business-logo')

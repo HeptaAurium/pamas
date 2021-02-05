@@ -218,10 +218,25 @@ $(document).ready(function () {
         });
     });
 
-    $('button.btn-send-mails').click(function (e) { 
+    $('button.btn-send-mails').click(function (e) {
         e.preventDefault();
-        
+
     });
+
+    // $('button#printPayslip').click(function (e) {
+    //     e.preventDefault();
+
+    //     $.ajax({
+    //         type: "post",
+    //         url: "/print/payslip",
+    //         data: {
+    //             staff: $('#ps_staff').val(),
+    //             month: $('#ps_month').val(),
+    //             year: $('#ps_year').val(),
+    //             payroll: $('#ps_payroll').val(),
+    //         },
+    //     });
+    // });
 });
 
 

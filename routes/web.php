@@ -10,6 +10,7 @@ use App\Http\Controllers\DeductionsController;
 use App\Http\Controllers\DepartmentsController;
 use App\Http\Controllers\GeneralHelperController;
 use App\Http\Controllers\PayrollController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PositionsController;
 use App\Http\Controllers\TaxGroupsController;
 use App\Http\Controllers\UserManagementController;
@@ -68,6 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('settings')->group(function () {
         Route::get('/business', [BusinessController::class, 'index']);
         Route::post('/update', [BusinessController::class, 'update']);
+        Route::post('/logo', [BusinessController::class, 'logo']);
     });
 
     // Edit staff allowance details
@@ -87,4 +89,6 @@ Route::group(['middleware' => ['role:Super-Admin|Admin|Accountant']], function (
     Route::post('/payroll/process', [PayrollController::class, 'process']);
     Route::post('/edit/allowance', [StaffController::class, 'edit_allowance']);
     Route::post('/edit/deduction', [StaffController::class, 'edit_deduction']);
+    Route::post('/print', [PdfController::class, 'index']);
+    Route::post('/print/payslip', [PdfController::class, 'payslip']);
 });

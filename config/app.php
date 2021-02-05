@@ -167,7 +167,7 @@ return [
          */
         Yajra\Datatables\DatatablesServiceProvider::class,
         Infinety\Alerts\AlertServiceProvider::class,
-
+        Barryvdh\DomPDF\ServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
 
         /*
@@ -231,8 +231,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-        // 
+        //
         'Datatables' => Yajra\DataTables\Facades\DataTables::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

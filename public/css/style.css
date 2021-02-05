@@ -410,11 +410,11 @@ button:focus {
   color: #303030;
 }
 
-.staff-profiles .main-body {
+.staff-profiles .main-body, .business_settings .main-body {
   padding: 15px;
 }
 
-.staff-profiles .prof-img-div {
+.staff-profiles .prof-img-div, .business_settings .prof-img-div {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -426,25 +426,25 @@ button:focus {
   transition: .3s;
 }
 
-.staff-profiles .prof-img-div i {
+.staff-profiles .prof-img-div i, .business_settings .prof-img-div i {
   font-size: 2rem;
   color: #002fff;
 }
 
-.staff-profiles .edit-pic {
+.staff-profiles .edit-pic, .business_settings .edit-pic {
   cursor: pointer;
 }
 
-.staff-profiles .edit-pic:hover .prof-img-div {
+.staff-profiles .edit-pic:hover .prof-img-div, .business_settings .edit-pic:hover .prof-img-div {
   opacity: 1;
 }
 
-.staff-profiles .card {
+.staff-profiles .card, .business_settings .card {
   -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
           box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
-.staff-profiles .card {
+.staff-profiles .card, .business_settings .card {
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -462,7 +462,7 @@ button:focus {
   color: #04010e !important;
 }
 
-.staff-profiles .card-body {
+.staff-profiles .card-body, .business_settings .card-body {
   -webkit-box-flex: 1;
       -ms-flex: 1 1 auto;
           flex: 1 1 auto;
@@ -470,22 +470,23 @@ button:focus {
   padding: 1rem;
 }
 
-.staff-profiles .gutters-sm {
+.staff-profiles .gutters-sm, .business_settings .gutters-sm {
   margin-right: -8px;
   margin-left: -8px;
 }
 
 .staff-profiles .gutters-sm > .col,
-.staff-profiles .gutters-sm > [class*=col-] {
+.staff-profiles .gutters-sm > [class*=col-], .business_settings .gutters-sm > .col,
+.business_settings .gutters-sm > [class*=col-] {
   padding-right: 8px;
   padding-left: 8px;
 }
 
-.staff-profiles h4 {
+.staff-profiles h4, .business_settings h4 {
   color: #04010e;
 }
 
-.staff-profiles .profile-pic {
+.staff-profiles .profile-pic, .business_settings .profile-pic {
   cursor: pointer;
 }
 
