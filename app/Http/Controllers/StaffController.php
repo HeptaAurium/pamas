@@ -196,6 +196,7 @@ class StaffController extends Controller
             $staff_deductions = DB::table('staff_deductions')->where('staff_id', $staff->id)->get();
             foreach ($staff_deductions as $item) {
                 $array = [
+                    'id'=>$item->id,
                     'name' => Deduction::where('id', $item->deduction)->pluck('name')->first(),
                     'amount' => $item->amount
                 ];

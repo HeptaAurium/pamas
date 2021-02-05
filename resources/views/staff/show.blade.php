@@ -36,7 +36,7 @@
                                         <p class="text-secondary mb-1">{{ $staff['position'] }}</p>
                                         <p class="text-muted font-size-sm mb-1">
                                             {{ $staff['department'] . ', ' . $staff['branch'] }}
-                                        </p> 
+                                        </p>
                                         <p class="text-muted font-size-sm mb-1">
                                             Gender : {{ ucfirst($staff->gender) }} <br>
                                             Age: {{$staff['age']}} years
