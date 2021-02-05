@@ -14,3 +14,7 @@ P@Mas requires at least php, composer, and apache installed in the target machin
 * Run `composer install`.
 * Run `php artisan migrate`.
 * Then serve the project either by `php artisan serve` or `php -S localhost:5500 it public/`.
+
+# Basics
+P@Mas is primarily developed to be used in management of payrolls for schools, this however, does not limit it to just that
+
