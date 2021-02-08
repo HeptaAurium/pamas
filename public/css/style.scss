@@ -212,7 +212,7 @@ button:focus {
                 width: 50%;
                 display: grid;
                 grid-template-columns: 1fr;
-                z-index: 5;
+                z-index: 999;
             }
         }
 
