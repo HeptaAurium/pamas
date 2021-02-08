@@ -243,7 +243,7 @@ button:focus {
   display: grid;
   -ms-grid-columns: 1fr;
       grid-template-columns: 1fr;
-  z-index: 5;
+  z-index: 999;
 }
 
 .login-page .container .panels-container {
