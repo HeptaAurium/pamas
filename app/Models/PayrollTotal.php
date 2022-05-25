@@ -68,7 +68,7 @@ class PayrollTotal extends Model
             $totals['deductions'] += $deductions;
 
             if ($settings->include_income_tax == 1) {
-                $tax = Self::calc_PAYE($taxable_income);
+                $tax = Self::compute_PAYE($taxable_income);
             } else {
                 $tax = 0;
             }
@@ -138,5 +138,49 @@ class PayrollTotal extends Model
         return $tax - (int)$relief;
     }
 
+    static function compute_PAYE($income)
+    {
+        $configs = DB::table('paye_configs')->where('id', 1)->first();
+        $rates  = DB::table('paye_rates')->get();
+        $rate_ids  = [];
 
+        foreach ($rates as $rate) {
+            array_push($rate_ids, $rate->id);
+        }
+
+        if ($income <= $configs->minimum_taxable_income) {
+            return 0; //minimum taxable income not met
+        }
+
+        $step = $configs->step;
+        $remaining = $income;
+
+        $bracket  =   DB::table('paye_rates')
+            ->where('min', '<', $income)
+            ->where('max', '>', $income)
+            ->first();
+
+        $first_bracket = $rates[0];
+        $n = array_search($bracket->id, $rate_ids);
+        $tax = 0;
+
+        // tax all brackets from $n=0 to $n-1
+
+        for ($i = 0; $i < $n; $i++) {
+            if ($i == 0) {  // first bracket
+                $tax += $first_bracket->rate / 100 * $first_bracket->max;
+                $remaining -= $first_bracket->max;
+            } else {
+                $tax += $rates[$i]->rate / 100 * $step;
+                $remaining -= $step;
+            }
+        }
+
+        // tax the current bracket
+        $tax += $bracket->rate / 100 * $remaining;
+
+        $relief = isset($configs->tax_relief) ? $configs->tax_relief : 0;
+        $tax -= $relief;
+        return $tax < 0 ? 0 : $tax;
+    }
 }
